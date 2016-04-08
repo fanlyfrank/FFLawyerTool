@@ -23,7 +23,7 @@
 #import "MBProgressHUD+Addition.h"
 
 
-@interface FFMainViewController () <UIScrollViewDelegate, TSTViewDataSource, TSTViewDelegate>
+@interface FFMainViewController () <UIScrollViewDelegate, UITextFieldDelegate, TSTViewDataSource, TSTViewDelegate>
 
 @property (strong, nonatomic) TSTView *tstview;
 
@@ -266,11 +266,15 @@
     [cancleDatePickerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.datePickerToobar.mas_left).with.offset(10);
         make.top.equalTo(self.datePickerToobar.mas_top).with.offset(5);
+        make.width.equalTo(@44);
+        make.height.equalTo(@44);
     }];
     
     [selectDatePickerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.datePickerToobar.mas_right).with.offset(-10);
         make.top.equalTo(self.datePickerToobar.mas_top).with.offset(5);
+        make.width.equalTo(@44);
+        make.height.equalTo(@44);
     }];
 
 }
@@ -356,6 +360,12 @@
             return;
         }
         
+        if ([startDate compare:endDate] == NSOrderedDescending ||
+            [startDate compare:endDate] == NSOrderedSame) {
+            [MBProgressHUD showToastWithTitle:@"起始日期在结束日期之后或相等！" success:NO superContainer:self.view withDuration:2];
+            return;
+        }
+        
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.detailsLabelText = @"正在计算";
         hud.removeFromSuperViewOnHide = YES;
@@ -385,7 +395,7 @@
 - (void)showCaculateResult:(FFBaseOutputModel *)result {
     UIAlertController *resultAlert =
     [UIAlertController alertControllerWithTitle:@"计算结果"
-                                        message:[NSString stringWithFormat:@"%@", result.totalResult]
+                                        message:[NSString stringWithFormat:@"%.2f", [result.totalResult doubleValue]]
                                  preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *showDetail = [UIAlertAction actionWithTitle:@"查看详情" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

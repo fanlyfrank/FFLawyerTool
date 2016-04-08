@@ -22,6 +22,8 @@
 		35BCCB4D1CAE3FBD00A1E9F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35BCCB4B1CAE3FBD00A1E9F0 /* LaunchScreen.storyboard */; };
 		35BCCB581CAE3FBD00A1E9F0 /* FFLawyerToolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35BCCB571CAE3FBD00A1E9F0 /* FFLawyerToolTests.m */; };
 		35BCCB631CAE3FBD00A1E9F0 /* FFLawyerToolUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35BCCB621CAE3FBD00A1E9F0 /* FFLawyerToolUITests.m */; };
+		35F313A71CB788E10060861D /* FFLoanInterestRateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F313A61CB788E10060861D /* FFLoanInterestRateModel.m */; };
+		35F313AA1CB789C80060861D /* FFLoanInterestRateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F313A91CB789C80060861D /* FFLoanInterestRateFactory.m */; };
 		8C21C54300372BB2BFF7BD87 /* libPods-FFLawyerTool.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CC07742EA440D37FCFE0B56 /* libPods-FFLawyerTool.a */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,10 @@
 		35BCCB5E1CAE3FBD00A1E9F0 /* FFLawyerToolUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FFLawyerToolUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35BCCB621CAE3FBD00A1E9F0 /* FFLawyerToolUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFLawyerToolUITests.m; sourceTree = "<group>"; };
 		35BCCB641CAE3FBD00A1E9F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		35F313A51CB788E10060861D /* FFLoanInterestRateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFLoanInterestRateModel.h; sourceTree = "<group>"; };
+		35F313A61CB788E10060861D /* FFLoanInterestRateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFLoanInterestRateModel.m; sourceTree = "<group>"; };
+		35F313A81CB789C80060861D /* FFLoanInterestRateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFLoanInterestRateFactory.h; sourceTree = "<group>"; };
+		35F313A91CB789C80060861D /* FFLoanInterestRateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFLoanInterestRateFactory.m; sourceTree = "<group>"; };
 		3CC07742EA440D37FCFE0B56 /* libPods-FFLawyerTool.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FFLawyerTool.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B6062D2BEAC93D0798324F8 /* Pods-FFLawyerTool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FFLawyerTool.release.xcconfig"; path = "Pods/Target Support Files/Pods-FFLawyerTool/Pods-FFLawyerTool.release.xcconfig"; sourceTree = "<group>"; };
 		90B0763604B29D64FC19A058 /* Pods-FFLawyerTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FFLawyerTool.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FFLawyerTool/Pods-FFLawyerTool.debug.xcconfig"; sourceTree = "<group>"; };
@@ -199,6 +205,10 @@
 				35A593101CB24EB800AD0559 /* FFBaseOutputModel.m */,
 				35A593121CB24F7800AD0559 /* FFCaculater.h */,
 				35A593131CB24F7800AD0559 /* FFCaculater.m */,
+				35F313A51CB788E10060861D /* FFLoanInterestRateModel.h */,
+				35F313A61CB788E10060861D /* FFLoanInterestRateModel.m */,
+				35F313A81CB789C80060861D /* FFLoanInterestRateFactory.h */,
+				35F313A91CB789C80060861D /* FFLoanInterestRateFactory.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -414,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35A5931B1CB26BE900AD0559 /* FFCaculateResultDetialViewController.m in Sources */,
+				35F313A71CB788E10060861D /* FFLoanInterestRateModel.m in Sources */,
 				35BCCB451CAE3FBD00A1E9F0 /* FFMainViewController.m in Sources */,
 				35A5931E1CB4C5B700AD0559 /* FFTSTInnerViewFactory.m in Sources */,
 				35A593211CB4C5DB00AD0559 /* FFTSTInnerView.m in Sources */,
@@ -422,6 +433,7 @@
 				35BCCB3F1CAE3FBD00A1E9F0 /* main.m in Sources */,
 				35A593181CB25AD800AD0559 /* MBProgressHUD+Addition.m in Sources */,
 				35A593141CB24F7800AD0559 /* FFCaculater.m in Sources */,
+				35F313AA1CB789C80060861D /* FFLoanInterestRateFactory.m in Sources */,
 				35A5930E1CB24E1B00AD0559 /* FFBaseInputModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
