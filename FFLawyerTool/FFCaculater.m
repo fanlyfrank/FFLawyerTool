@@ -22,8 +22,6 @@
     NSAssert(inputModel.princeple, @"input model's princeple can't be nil!");
     NSAssert(inputModel.startDate, @"input model's startDate can't be nil!");
     NSAssert(inputModel.endDate, @"input model's endDate can't be nil!");
-    NSAssert([inputModel.startDate compare:inputModel.endDate] == NSOrderedDescending,
-             @"start date can't later at end date");
     
     FFBaseOutputModel *result = [FFBaseOutputModel new];
 
