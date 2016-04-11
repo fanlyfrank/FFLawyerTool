@@ -22,7 +22,8 @@
     NSAssert(inputModel.princeple, @"input model's princeple can't be nil!");
     NSAssert(inputModel.startDate, @"input model's startDate can't be nil!");
     NSAssert(inputModel.endDate, @"input model's endDate can't be nil!");
-    NSAssert([inputModel.startDate laterDate:inputModel.endDate], @"start date can't later at end date");
+    NSAssert([inputModel.startDate compare:inputModel.endDate] == NSOrderedDescending,
+             @"start date can't later at end date");
     
     FFBaseOutputModel *result = [FFBaseOutputModel new];
 
@@ -60,6 +61,7 @@
     }
     
     else {
+        
         result.totalResult = @250;
         result.parts = @[@{@"period": [NSString stringWithFormat:@"%@~%@共%.0f天",
                                        [briefFormatter stringFromDate:startDate],
@@ -67,6 +69,7 @@
                                        3.f], @"result":
                                [NSString stringWithFormat:@"%.2f",
                                 [result.totalResult doubleValue]]}];
+        
     }
 
 }
@@ -100,4 +103,5 @@
     
     return result;
 }
+
 @end
