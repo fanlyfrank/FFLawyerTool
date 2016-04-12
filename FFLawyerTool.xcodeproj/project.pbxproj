@@ -24,6 +24,12 @@
 		35BCCB631CAE3FBD00A1E9F0 /* FFLawyerToolUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35BCCB621CAE3FBD00A1E9F0 /* FFLawyerToolUITests.m */; };
 		35F313A71CB788E10060861D /* FFLoanInterestRateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F313A61CB788E10060861D /* FFLoanInterestRateModel.m */; };
 		35F313AA1CB789C80060861D /* FFLoanInterestRateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F313A91CB789C80060861D /* FFLoanInterestRateFactory.m */; };
+		35F313B21CBC886E0060861D /* HttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F313B11CBC886E0060861D /* HttpClient.m */; };
+		35F313B51CBC9D2A0060861D /* FFOutputPartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F313B41CBC9D2A0060861D /* FFOutputPartModel.m */; };
+		35F313B81CBCD7480060861D /* FFDelayPerformanceInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F313B71CBCD7480060861D /* FFDelayPerformanceInputView.m */; };
+		35F313BB1CBCDC830060861D /* FFFineInterestInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F313BA1CBCDC830060861D /* FFFineInterestInputView.m */; };
+		35F313BE1CBCE61B0060861D /* FFDelayPerformanceInputModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F313BD1CBCE61B0060861D /* FFDelayPerformanceInputModel.m */; };
+		35F313C11CBCE6B60060861D /* FFFineInterestInputModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F313C01CBCE6B60060861D /* FFFineInterestInputModel.m */; };
 		8C21C54300372BB2BFF7BD87 /* libPods-FFLawyerTool.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CC07742EA440D37FCFE0B56 /* libPods-FFLawyerTool.a */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +85,18 @@
 		35F313A61CB788E10060861D /* FFLoanInterestRateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFLoanInterestRateModel.m; sourceTree = "<group>"; };
 		35F313A81CB789C80060861D /* FFLoanInterestRateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFLoanInterestRateFactory.h; sourceTree = "<group>"; };
 		35F313A91CB789C80060861D /* FFLoanInterestRateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFLoanInterestRateFactory.m; sourceTree = "<group>"; };
+		35F313B01CBC886E0060861D /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
+		35F313B11CBC886E0060861D /* HttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpClient.m; sourceTree = "<group>"; };
+		35F313B31CBC9D2A0060861D /* FFOutputPartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFOutputPartModel.h; sourceTree = "<group>"; };
+		35F313B41CBC9D2A0060861D /* FFOutputPartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFOutputPartModel.m; sourceTree = "<group>"; };
+		35F313B61CBCD7480060861D /* FFDelayPerformanceInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDelayPerformanceInputView.h; sourceTree = "<group>"; };
+		35F313B71CBCD7480060861D /* FFDelayPerformanceInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDelayPerformanceInputView.m; sourceTree = "<group>"; };
+		35F313B91CBCDC830060861D /* FFFineInterestInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFFineInterestInputView.h; sourceTree = "<group>"; };
+		35F313BA1CBCDC830060861D /* FFFineInterestInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFFineInterestInputView.m; sourceTree = "<group>"; };
+		35F313BC1CBCE61B0060861D /* FFDelayPerformanceInputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDelayPerformanceInputModel.h; sourceTree = "<group>"; };
+		35F313BD1CBCE61B0060861D /* FFDelayPerformanceInputModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDelayPerformanceInputModel.m; sourceTree = "<group>"; };
+		35F313BF1CBCE6B60060861D /* FFFineInterestInputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFFineInterestInputModel.h; sourceTree = "<group>"; };
+		35F313C01CBCE6B60060861D /* FFFineInterestInputModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFFineInterestInputModel.m; sourceTree = "<group>"; };
 		3CC07742EA440D37FCFE0B56 /* libPods-FFLawyerTool.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FFLawyerTool.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B6062D2BEAC93D0798324F8 /* Pods-FFLawyerTool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FFLawyerTool.release.xcconfig"; path = "Pods/Target Support Files/Pods-FFLawyerTool/Pods-FFLawyerTool.release.xcconfig"; sourceTree = "<group>"; };
 		90B0763604B29D64FC19A058 /* Pods-FFLawyerTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FFLawyerTool.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FFLawyerTool/Pods-FFLawyerTool.debug.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +162,7 @@
 		35BCCB3C1CAE3FBD00A1E9F0 /* FFLawyerTool */ = {
 			isa = PBXGroup;
 			children = (
+				35F313AB1CBC87AD0060861D /* Facility */,
 				35A593151CB25AA800AD0559 /* Categories */,
 				35BCCB721CAE3FE300A1E9F0 /* Controller */,
 				35BCCB711CAE3FDB00A1E9F0 /* Model */,
@@ -192,6 +211,10 @@
 				35A5931D1CB4C5B700AD0559 /* FFTSTInnerViewFactory.m */,
 				35A5931F1CB4C5DB00AD0559 /* FFTSTInnerView.h */,
 				35A593201CB4C5DB00AD0559 /* FFTSTInnerView.m */,
+				35F313B61CBCD7480060861D /* FFDelayPerformanceInputView.h */,
+				35F313B71CBCD7480060861D /* FFDelayPerformanceInputView.m */,
+				35F313B91CBCDC830060861D /* FFFineInterestInputView.h */,
+				35F313BA1CBCDC830060861D /* FFFineInterestInputView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -209,6 +232,12 @@
 				35F313A61CB788E10060861D /* FFLoanInterestRateModel.m */,
 				35F313A81CB789C80060861D /* FFLoanInterestRateFactory.h */,
 				35F313A91CB789C80060861D /* FFLoanInterestRateFactory.m */,
+				35F313B31CBC9D2A0060861D /* FFOutputPartModel.h */,
+				35F313B41CBC9D2A0060861D /* FFOutputPartModel.m */,
+				35F313BC1CBCE61B0060861D /* FFDelayPerformanceInputModel.h */,
+				35F313BD1CBCE61B0060861D /* FFDelayPerformanceInputModel.m */,
+				35F313BF1CBCE6B60060861D /* FFFineInterestInputModel.h */,
+				35F313C01CBCE6B60060861D /* FFFineInterestInputModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -222,6 +251,23 @@
 				35A5931A1CB26BE900AD0559 /* FFCaculateResultDetialViewController.m */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		35F313AB1CBC87AD0060861D /* Facility */ = {
+			isa = PBXGroup;
+			children = (
+				35F313AC1CBC87BD0060861D /* Network */,
+			);
+			name = Facility;
+			sourceTree = "<group>";
+		};
+		35F313AC1CBC87BD0060861D /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				35F313B01CBC886E0060861D /* HttpClient.h */,
+				35F313B11CBC886E0060861D /* HttpClient.m */,
+			);
+			name = Network;
 			sourceTree = "<group>";
 		};
 		39F492F6E9E2C828B342473F /* Pods */ = {
@@ -425,15 +471,21 @@
 			files = (
 				35A5931B1CB26BE900AD0559 /* FFCaculateResultDetialViewController.m in Sources */,
 				35F313A71CB788E10060861D /* FFLoanInterestRateModel.m in Sources */,
+				35F313BE1CBCE61B0060861D /* FFDelayPerformanceInputModel.m in Sources */,
 				35BCCB451CAE3FBD00A1E9F0 /* FFMainViewController.m in Sources */,
 				35A5931E1CB4C5B700AD0559 /* FFTSTInnerViewFactory.m in Sources */,
 				35A593211CB4C5DB00AD0559 /* FFTSTInnerView.m in Sources */,
 				35BCCB421CAE3FBD00A1E9F0 /* AppDelegate.m in Sources */,
 				35A593111CB24EB800AD0559 /* FFBaseOutputModel.m in Sources */,
+				35F313B51CBC9D2A0060861D /* FFOutputPartModel.m in Sources */,
+				35F313B81CBCD7480060861D /* FFDelayPerformanceInputView.m in Sources */,
+				35F313C11CBCE6B60060861D /* FFFineInterestInputModel.m in Sources */,
 				35BCCB3F1CAE3FBD00A1E9F0 /* main.m in Sources */,
 				35A593181CB25AD800AD0559 /* MBProgressHUD+Addition.m in Sources */,
+				35F313BB1CBCDC830060861D /* FFFineInterestInputView.m in Sources */,
 				35A593141CB24F7800AD0559 /* FFCaculater.m in Sources */,
 				35F313AA1CB789C80060861D /* FFLoanInterestRateFactory.m in Sources */,
+				35F313B21CBC886E0060861D /* HttpClient.m in Sources */,
 				35A5930E1CB24E1B00AD0559 /* FFBaseInputModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

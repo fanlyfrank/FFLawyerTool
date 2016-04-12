@@ -11,13 +11,11 @@
 @interface FFTSTInnerView : UIView
 
 @property (strong, nonatomic) UITextField *principleTextField;
-
-@property (strong, nonatomic) UIButton *startDateBtn;
-@property (strong, nonatomic) UIButton *startDateTipsBtn;
-
-@property (strong, nonatomic) UIButton *endDateBtn;
-@property (strong, nonatomic) UIButton *endDateTipsBtn;
-
 @property (strong, nonatomic) UIButton *startCalculateBtn;
 
+@property (assign, nonatomic) UIEdgeInsets padding;
+@property (assign, nonatomic) UIEdgeInsets minPadding;
+
+- (void)commonInit;
+- (void)addConstraintsToSubviews;
 @end

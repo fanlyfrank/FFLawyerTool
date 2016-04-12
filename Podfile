@@ -8,6 +8,7 @@ pod 'TopScrollTabView', '1.0'
 pod "Masonry"
 pod 'MBProgressHUD', '~> 0.9.2'
 pod 'YYModel'
+pod 'AFNetworking', '~> 3.0’
 end
 
 target 'FFLawyerToolTests' do
@@ -17,4 +18,3 @@ end
 target 'FFLawyerToolUITests' do
 
 end
-

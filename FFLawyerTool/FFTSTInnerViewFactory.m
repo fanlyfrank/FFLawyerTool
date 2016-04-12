@@ -8,6 +8,8 @@
 
 #import "FFTSTInnerViewFactory.h"
 #import "FFTSTInnerView.h"
+#import "FFDelayPerformanceInputView.h"
+#import "FFFineInterestInputView.h"
 
 @implementation FFTSTInnerViewFactory
 
@@ -32,7 +34,11 @@
     switch (type) {
     
         case FFTSTInnerViewTypeDeferredUtion:
-            result = [[FFTSTInnerView alloc ] init];
+            result = [[FFDelayPerformanceInputView alloc ] init];
+            break;
+           
+        case FFTSTInnerViewTypeFineInterest:
+            result = [[FFFineInterestInputView alloc] init];
             break;
             
         default:

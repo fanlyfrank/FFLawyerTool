@@ -7,7 +7,12 @@
 //
 
 #import "FFBaseOutputModel.h"
+#import "FFOutputPartModel.h"
 
 @implementation FFBaseOutputModel
+
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{@"parts" : [FFOutputPartModel class]};
+}
 
 @end

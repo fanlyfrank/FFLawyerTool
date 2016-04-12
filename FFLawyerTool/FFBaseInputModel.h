@@ -11,7 +11,5 @@
 @interface FFBaseInputModel : NSObject
 
 @property (strong, nonatomic) NSNumber *princeple;
-@property (strong, nonatomic) NSDate *startDate;
-@property (strong, nonatomic) NSDate *endDate;
 
 @end

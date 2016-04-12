@@ -8,12 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-@class FFBaseInputModel;
+@class FFDelayPerformanceInputModel;
+@class FFFineInterestInputModel;
 @class FFBaseOutputModel;
 
 @interface FFCaculater : NSObject
 
-- (void)caculateDeferredUtionExpenses:(FFBaseInputModel *)inputModel
++ (instancetype)sharedCaculater;
+
+- (void)caculateDeferredUtionExpenses:(FFDelayPerformanceInputModel *)inputModel
                               success:(void(^)(FFBaseOutputModel *result))success
                               failure:(void(^)(NSError *error))failure;
+
+- (void)caculateFineInterest:(FFFineInterestInputModel *)inputModel
+                     success:(void(^)(FFBaseOutputModel *result))success
+                     failure:(void(^)(NSError *error))failure;
 @end

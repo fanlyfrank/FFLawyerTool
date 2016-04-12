@@ -14,9 +14,12 @@
 
 #import "FFTSTInnerViewFactory.h"
 #import "FFTSTInnerView.h"
+#import "FFDelayPerformanceInputView.h"
+#import "FFFineInterestInputView.h"
 
 #import "FFCaculater.h"
-#import "FFBaseInputModel.h"
+#import "FFDelayPerformanceInputModel.h"
+#import "FFFineInterestInputModel.h"
 #import "FFBaseOutputModel.h"
 #import "FFCaculateResultDetialViewController.h"
 
@@ -58,8 +61,8 @@
     
     _tabDatas = @[@"迟延履行金", @"罚息", @"保全费", @"执行费", @"诉讼费"];
     
-    _caculaterInputs = @[[FFBaseInputModel new],
-                         [FFBaseInputModel new],
+    _caculaterInputs = @[[FFDelayPerformanceInputModel new],
+                         [FFFineInterestInputModel new],
                          [FFBaseInputModel new],
                          [FFBaseInputModel new],
                          [FFBaseInputModel new]];
@@ -161,12 +164,33 @@
     
     NSInteger currentIndex = [self.tstview indexForSelectedTab];
     
+    NSString *text = [NSString stringWithFormat:@"%@%@", textField.text, string];
+    
     FFBaseInputModel *currentInputModel = self.caculaterInputs[currentIndex];
-    currentInputModel.princeple =
-    [NSNumber numberWithFloat:[textField.text floatValue]];
+    if (textField.tag == 0) {
+        
+        currentInputModel.princeple =
+        [NSNumber numberWithFloat:[text doubleValue]];
+        
+    } else if (textField.tag == 1) {
+        
+        FFFineInterestInputModel *realInputModel =  (FFFineInterestInputModel *)currentInputModel;
+        realInputModel.minRate =
+        [NSNumber numberWithFloat:[text doubleValue]];
+        
+    } else if (textField.tag == 2) {
+        
+        FFFineInterestInputModel *realInputModel =  (FFFineInterestInputModel *)currentInputModel;
+        realInputModel.maxRate =
+        [NSNumber numberWithFloat:[text doubleValue]];
+        NSLog(@"--------------%@", text);
+
+    }
+    
     
     return YES;
 }
+
 #pragma mark - private
 - (void)dismissKeyboard {
     NSInteger currentIndex = [self.tstview indexForSelectedTab];
@@ -210,15 +234,64 @@
     FFTSTInnerView *currentInnerView = self.innerViews[currentIndex];
     FFBaseInputModel *currentInputModel = self.caculaterInputs[currentIndex];
     
-    if (self.datePickerFlag == 0) {
-        [currentInnerView.startDateBtn setTitle:dateStr forState:UIControlStateNormal];
-        currentInputModel.startDate = self.datePicker.date;
+    if ([currentInnerView isKindOfClass:[FFDelayPerformanceInputView class]]) {
+        FFDelayPerformanceInputView *realInnerView = (FFDelayPerformanceInputView *)currentInnerView;
+        FFDelayPerformanceInputModel *realInputMode = (FFDelayPerformanceInputModel *)currentInputModel;
+        
+        if (self.datePickerFlag == 0) {
+            [realInnerView.startDateBtn setTitle:dateStr forState:UIControlStateNormal];
+            realInputMode.startDate = self.datePicker.date;
+            
+            NSInteger currentIndex = [self.tstview indexForSelectedTab];
+            if (currentIndex == 1) {
+                FFFineInterestInputView *fineInnerView = (FFFineInterestInputView *)realInnerView;
+                if ([self.datePicker.date compare:[dateformatter dateFromString:@"1996.04.30"]] == NSOrderedAscending) {
+                    fineInnerView.minRateTextField.userInteractionEnabled = YES;
+                    fineInnerView.minRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
+                                                                            initWithString:@"输入1996.4.30前的利率"
+                                                                            attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+                    fineInnerView.minRateTextField.backgroundColor = [UIColor blueColor];
+                }
+                
+                else {
+                    
+                    fineInnerView.minRateTextField.userInteractionEnabled = NO;
+                    fineInnerView.minRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
+                                                                            initWithString:@"暂不可用"
+                                                                            attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+                    fineInnerView.minRateTextField.backgroundColor = [UIColor grayColor];
+                }
+            }
+
+        }
+        
+        else if (self.datePickerFlag == 1) {
+            [realInnerView.endDateBtn setTitle:dateStr forState:UIControlStateNormal];
+            realInputMode.endDate = self.datePicker.date;
+            
+            NSInteger currentIndex = [self.tstview indexForSelectedTab];
+            if (currentIndex == 1) {
+                FFFineInterestInputView *fineInnerView = (FFFineInterestInputView *)realInnerView;
+                if ([self.datePicker.date compare:[dateformatter dateFromString:@"2014.01.01"]] == NSOrderedDescending) {
+                    fineInnerView.maxRateTextField.userInteractionEnabled = YES;
+                    fineInnerView.maxRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
+                                                                            initWithString:@"输入2014.1.1后的利率"
+                                                                            attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+                    fineInnerView.maxRateTextField.backgroundColor = [UIColor blueColor];
+                }
+                
+                else {
+                   
+                    fineInnerView.maxRateTextField.userInteractionEnabled = NO;
+                    fineInnerView.maxRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
+                                                                            initWithString:@"暂不可用"
+                                                                            attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+                    fineInnerView.maxRateTextField.backgroundColor = [UIColor grayColor];
+                }
+            }
+        }
     }
     
-    else if (self.datePickerFlag == 1) {
-        [currentInnerView.endDateBtn setTitle:dateStr forState:UIControlStateNormal];
-        currentInputModel.endDate = self.datePicker.date;
-    }
     
     NSLog(@"selete date is %@", self.datePicker.date);
 }
@@ -317,54 +390,14 @@
 - (void)calculate:(UIButton *)sender {
     [self hideDatePickers];
     NSInteger currentIndex = [self.tstview indexForSelectedTab];
-    FFTSTInnerView *currentInnerView = self.innerViews[currentIndex];
-    FFBaseInputModel *currentInputModel = self.caculaterInputs[currentIndex];
+    
     
     if (currentIndex == 0) {
         
-        UITextField *currentPrincepleTextField = currentInnerView.principleTextField;
-        NSString *startDateStr = currentInnerView.startDateBtn.titleLabel.text;
-        NSString *endDateStr = currentInnerView.endDateBtn.titleLabel.text;
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
+        FFTSTInnerView *currentInnerView = self.innerViews[currentIndex];
+        FFDelayPerformanceInputModel *currentInputModel = self.caculaterInputs[currentIndex];
         
-        NSNumber *currentPrinceple = [NSNumber numberWithDouble:[currentPrincepleTextField.text doubleValue]];
-        NSDate *startDate = [dateFormatter dateFromString:startDateStr];
-        NSDate *endDate = [dateFormatter dateFromString:endDateStr];
-        
-        
-        if (currentPrinceple && [currentPrinceple doubleValue] > 0) {
-            currentInputModel.princeple = currentPrinceple;
-        }
-        
-        else {
-            [MBProgressHUD showToastWithTitle:@"请输入本金！" success:NO superContainer:self.view withDuration:2];
-            return;
-        }
-        
-        if (startDate) {
-            currentInputModel.startDate = startDate;
-        }
-        
-        else {
-            [MBProgressHUD showToastWithTitle:@"请选择起始时间！" success:NO superContainer:self.view withDuration:2];
-            return;
-        }
-        
-        if (endDate) {
-            currentInputModel.endDate = endDate;
-        }
-        
-        else {
-            [MBProgressHUD showToastWithTitle:@"请选择结束时间！" success:NO superContainer:self.view withDuration:2];
-            return;
-        }
-        
-        if ([startDate compare:endDate] == NSOrderedDescending ||
-            [startDate compare:endDate] == NSOrderedSame) {
-            [MBProgressHUD showToastWithTitle:@"起始日期在结束日期之后或相等！" success:NO superContainer:self.view withDuration:2];
-            return;
-        }
+        [self checkInput:currentInnerView andSetCurrentInputModel:currentInputModel];
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.detailsLabelText = @"正在计算";
@@ -388,8 +421,91 @@
                                                   
                                               }];
         
+    } else if (currentIndex == 1) {
+        
+        FFTSTInnerView *currentInnerView = self.innerViews[currentIndex];
+        FFFineInterestInputModel *currentInputModel = self.caculaterInputs[currentIndex];
+        
+        [self checkInput:currentInnerView andSetCurrentInputModel:currentInputModel];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.detailsLabelText = @"正在计算";
+        hud.removeFromSuperViewOnHide = YES;
+        [self.caculater caculateFineInterest:currentInputModel
+                                     success:^(FFBaseOutputModel *result) {
+                                         
+                                         [hud hide:YES];
+                                         [self showCaculateResult:result];
+
+                                     } failure:^(NSError *error) {
+                                         
+                                         [hud hide:YES];
+                                         [MBProgressHUD showToastWithTitle:[error description]
+                                                                   success:NO
+                                                            superContainer:self.view
+                                                              withDuration:1.5];
+                                         
+                                     }];
     }
     
+}
+
+- (void)checkInput:(FFTSTInnerView *)currentInnerView andSetCurrentInputModel:(FFBaseInputModel *)currentInputModel {
+    
+    UITextField *currentPrincepleTextField = currentInnerView.principleTextField;
+    NSString *startDateStr;
+    NSString *endDateStr;
+    if ([currentInnerView isKindOfClass:[FFDelayPerformanceInputView class]]) {
+        FFDelayPerformanceInputView *realInnerView = (FFDelayPerformanceInputView *)currentInnerView;
+        startDateStr = realInnerView.startDateBtn.titleLabel.text;
+        endDateStr = realInnerView.endDateBtn.titleLabel.text;
+    }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
+    
+    NSNumber *currentPrinceple = [NSNumber numberWithDouble:[currentPrincepleTextField.text doubleValue]];
+    NSDate *startDate = [dateFormatter dateFromString:startDateStr];
+    NSDate *endDate = [dateFormatter dateFromString:endDateStr];
+    
+    
+    if (currentPrinceple && [currentPrinceple doubleValue] > 0) {
+        currentInputModel.princeple = currentPrinceple;
+    }
+    
+    else {
+        [MBProgressHUD showToastWithTitle:@"请输入本金！" success:NO superContainer:self.view withDuration:2];
+        return;
+    }
+    
+    if (startDate) {
+        if ([currentInputModel isKindOfClass:[FFDelayPerformanceInputModel class]]) {
+            FFDelayPerformanceInputModel *realInputModel = (FFDelayPerformanceInputModel *)currentInputModel;
+            realInputModel.startDate = startDate;
+        }
+    }
+    
+    
+    else {
+        [MBProgressHUD showToastWithTitle:@"请选择起始时间！" success:NO superContainer:self.view withDuration:2];
+        return;
+    }
+    
+    if (endDate) {
+        if ([currentInputModel isKindOfClass:[FFDelayPerformanceInputModel class]]) {
+            FFDelayPerformanceInputModel *realInputModel = (FFDelayPerformanceInputModel *)currentInputModel;
+            realInputModel.endDate = endDate;
+        }
+    }
+    
+    else {
+        [MBProgressHUD showToastWithTitle:@"请选择结束时间！" success:NO superContainer:self.view withDuration:2];
+        return;
+    }
+    
+    if ([startDate compare:endDate] == NSOrderedDescending ||
+        [startDate compare:endDate] == NSOrderedSame) {
+        [MBProgressHUD showToastWithTitle:@"起始日期在结束日期之后或相等！" success:NO superContainer:self.view withDuration:2];
+        return;
+    }
 }
 
 - (void)showCaculateResult:(FFBaseOutputModel *)result {
@@ -425,7 +541,12 @@
     
     FFTSTInnerView *innerView;
     if (self.innerViews[tabIndex] == [NSNull null]) {
-        innerView = [self.innerViewFactory creatInnerViewByType:FFTSTInnerViewTypeDeferredUtion];
+        if (tabIndex != 1) {
+            innerView = [self.innerViewFactory creatInnerViewByType:FFTSTInnerViewTypeDeferredUtion];
+        } else {
+            innerView = [self.innerViewFactory creatInnerViewByType:FFTSTInnerViewTypeFineInterest];
+        }
+        
         [self.innerViews replaceObjectAtIndex:tabIndex withObject:innerView];
     }
     
@@ -435,27 +556,40 @@
     
     innerView.principleTextField.delegate = self;
     
-    [innerView.startDateBtn
-     addTarget:self
-     action:@selector(pickDate:)
-     forControlEvents:UIControlEventTouchUpInside ];
+    if ([innerView isKindOfClass:[FFDelayPerformanceInputView class]]) {
+        
+        FFDelayPerformanceInputView *realInnerView = (FFDelayPerformanceInputView *)innerView;
+        
+        [realInnerView.startDateBtn
+         addTarget:self
+         action:@selector(pickDate:)
+         forControlEvents:UIControlEventTouchUpInside ];
+        
+        realInnerView.startDateTipsBtn.tag = 0;
+        [realInnerView.startDateTipsBtn
+         addTarget:self
+         action:@selector(dateTips:)
+         forControlEvents:UIControlEventTouchUpInside];
+        
+        [realInnerView.endDateBtn
+         addTarget:self
+         action:@selector(pickDate:)
+         forControlEvents:UIControlEventTouchUpInside];
+        
+        realInnerView.endDateTipsBtn.tag = 1;
+        [realInnerView.endDateTipsBtn
+         addTarget:self
+         action:@selector(dateTips:)
+         forControlEvents:UIControlEventTouchUpInside];
+    }
     
-    innerView.startDateTipsBtn.tag = 0;
-    [innerView.startDateTipsBtn
-     addTarget:self
-     action:@selector(dateTips:)
-     forControlEvents:UIControlEventTouchUpInside];
-    
-    [innerView.endDateBtn
-     addTarget:self
-     action:@selector(pickDate:)
-     forControlEvents:UIControlEventTouchUpInside];
-    
-    innerView.endDateTipsBtn.tag = 1;
-    [innerView.endDateTipsBtn
-     addTarget:self
-     action:@selector(dateTips:)
-     forControlEvents:UIControlEventTouchUpInside];
+    if ([innerView isKindOfClass:[FFFineInterestInputView class]]) {
+        
+        FFFineInterestInputView *realInnerView = (FFFineInterestInputView *)innerView;
+        
+        realInnerView.maxRateTextField.delegate = self;
+        realInnerView.minRateTextField.delegate = self;
+    }
     
     [innerView.startCalculateBtn
      addTarget:self
@@ -496,22 +630,31 @@
         innerView.principleTextField.text = [currentInput.princeple stringValue];
     }
     
-    if (currentInput.startDate || currentInput.endDate) {
+    if ([currentInput isKindOfClass:[FFDelayPerformanceInputModel class]]) {
+        FFDelayPerformanceInputModel *realInputModel = (FFDelayPerformanceInputModel *)currentInput;
         
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy年MM月dd日"];
-        
-        if (currentInput.startDate) {
-            [innerView.startDateBtn
-             setTitle:[formatter stringFromDate:currentInput.startDate]
-             forState:UIControlStateNormal];
+        if (realInputModel.startDate || realInputModel.endDate) {
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy年MM月dd日"];
+            
+            if ([innerView isKindOfClass:[FFDelayPerformanceInputView class]]) {
+                FFDelayPerformanceInputView *realInnerView = (FFDelayPerformanceInputView *)innerView;
+                if (realInputModel.startDate) {
+                    [realInnerView.startDateBtn
+                     setTitle:[formatter stringFromDate:realInputModel.startDate]
+                     forState:UIControlStateNormal];
+                }
+                
+                if (realInputModel.endDate) {
+                    [realInnerView.endDateBtn
+                     setTitle:[formatter stringFromDate:realInputModel.endDate]
+                     forState:UIControlStateNormal];
+                }
+                
+            }
         }
-        
-        if (currentInput.endDate) {
-            [innerView.endDateBtn
-             setTitle:[formatter stringFromDate:currentInput.endDate]
-             forState:UIControlStateNormal];
-        }
+
     }
 }
 

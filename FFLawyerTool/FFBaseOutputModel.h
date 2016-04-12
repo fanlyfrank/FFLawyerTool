@@ -10,7 +10,10 @@
 
 @interface FFBaseOutputModel : NSObject
 
+@property (copy, nonatomic) NSString *startDate;
+@property (copy, nonatomic) NSString *endDate;
 @property (strong, nonatomic) NSNumber *totalResult;
+
 @property (strong, nonatomic) NSArray *parts;
 
 @end

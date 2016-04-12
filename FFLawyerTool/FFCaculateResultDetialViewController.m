@@ -7,6 +7,7 @@
 //
 
 #import "FFCaculateResultDetialViewController.h"
+#import "FFOutputPartModel.h"
 
 @interface FFCaculateResultDetialViewController ()
 
@@ -43,14 +44,14 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *lineData = self.resultNeedDisplay.parts[indexPath.row];
+    FFOutputPartModel *lineData = self.resultNeedDisplay.parts[indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"resultCell" forIndexPath:indexPath];
     
     cell.textLabel.text =
-    [NSString stringWithFormat:@"期间：%@", lineData[@"period"]];
+    [NSString stringWithFormat:@"期间：%@~%@:共%@天", lineData.startDate, lineData.endDate,  lineData.diffDays];
     cell.detailTextLabel.textColor = [UIColor redColor];
     cell.detailTextLabel.text =
-    [NSString stringWithFormat:@"金额：%@", lineData[@"result"]];
+    [NSString stringWithFormat:@"金额：%0.2f", [lineData.amount doubleValue]];
     
     return cell;
 }
@@ -71,8 +72,8 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, [UIScreen mainScreen].bounds.size.width, 20)];
     
     titleLabel.text =
-    [NSString stringWithFormat:@"总额：%@",
-     self.resultNeedDisplay.totalResult];
+    [NSString stringWithFormat:@"总额：%0.2f",
+     [self.resultNeedDisplay.totalResult doubleValue]];
     
     [result addSubview:titleLabel];
     

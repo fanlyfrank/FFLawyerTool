@@ -6,15 +6,49 @@
 //  Copyright © 2016 fanly frank. All rights reserved.
 //
 
+#import <YYModel/YYModel.h>
+
 #import "FFCaculater.h"
-#import "FFBaseInputModel.h"
+#import "FFDelayPerformanceInputModel.h"
+#import "FFFineInterestInputModel.h"
 #import "FFBaseOutputModel.h"
 #import "FFLoanInterestRateFactory.h"
 #import "FFLoanInterestRateModel.h"
+#import "HttpClient.h"
+
+@interface FFCaculater ()
+
+@property (strong, nonatomic) HttpClient *httpClient;
+
+@end
 
 @implementation FFCaculater
 
-- (void)caculateDeferredUtionExpenses:(FFBaseInputModel *)inputModel
++ (instancetype)sharedCaculater {
+    
+    static id caculater;
+    
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        caculater = [[self alloc] init];
+    });
+    
+    return caculater;
+}
+
+- (instancetype)init {
+    
+    self = [super init];
+    
+    if (self) {
+        _httpClient = [HttpClient sharedClient];
+    }
+    
+    return self;
+}
+
+- (void)caculateDeferredUtionExpenses:(FFDelayPerformanceInputModel *)inputModel
                               success:(void(^)(FFBaseOutputModel *result))success
                               failure:(void(^)(NSError *error))failure {
     
@@ -23,83 +57,78 @@
     NSAssert(inputModel.startDate, @"input model's startDate can't be nil!");
     NSAssert(inputModel.endDate, @"input model's endDate can't be nil!");
     
-    FFBaseOutputModel *result = [FFBaseOutputModel new];
+    //FFBaseOutputModel *result = [FFBaseOutputModel new];
 
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMdd"];
-    NSDateFormatter *briefFormatter = [[NSDateFormatter alloc] init];
-    [briefFormatter setDateFormat:@"yy.MM.dd"];
-    
-    NSDate *topInflectionPoint = [formatter dateFromString:@"20140801"];
-    
-    NSDate *startDate = inputModel.startDate;
-    NSDate *endDate = inputModel.endDate;
-    
-   // NSArray *deferredPeriods = [self getDeferredPeriodsWithStart:startDate end:endDate];
+    [formatter setDateFormat:@"yyyy.MM.dd"];
     
     
-    if ([startDate isEqualToDate:topInflectionPoint] ||
-        [startDate laterDate:topInflectionPoint]) {
+    NSString *startDate = [formatter stringFromDate:inputModel.startDate];
+    NSString *endDate = [formatter stringFromDate:inputModel.endDate];
+    
+    NSDictionary *params = @{@"startDate":startDate, @"endDate":endDate, @"princeple":inputModel.princeple};
+    [self.httpClient getApi:@"caculate/delayPerformance" params:params progress:^(NSProgress *downloadProgress) {
         
-        NSTimeInterval interval = [endDate timeIntervalSinceDate:startDate];
-        NSTimeInterval intervalOfDay = interval / (24 * 3600);
-        intervalOfDay ++;
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
         
-        result.totalResult = [NSNumber numberWithDouble:[inputModel.princeple doubleValue] *
-                              intervalOfDay *
-                              0.000175];
+        if (success) {
+            NSDictionary *dic = responseObject[@"obj"];
+            FFBaseOutputModel *result = [FFBaseOutputModel yy_modelWithDictionary:dic];
+            success(result);
+        }
         
-        result.parts = @[@{@"period": [NSString stringWithFormat:@"%@~%@共%.0f天",
-                                       [briefFormatter stringFromDate:startDate],
-                                       [briefFormatter stringFromDate:endDate],
-                                       intervalOfDay], @"result":
-                                      [NSString stringWithFormat:@"%.2f",
-                                       [result.totalResult doubleValue]]}];
-        success(result);
-    }
-    
-    else {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-        result.totalResult = @250;
-        result.parts = @[@{@"period": [NSString stringWithFormat:@"%@~%@共%.0f天",
-                                       [briefFormatter stringFromDate:startDate],
-                                       [briefFormatter stringFromDate:endDate],
-                                       3.f], @"result":
-                               [NSString stringWithFormat:@"%.2f",
-                                [result.totalResult doubleValue]]}];
-        
-    }
+        if (failure) {
+            failure(error);
+        }
+    }];
 
 }
 
-- (NSArray *)getDeferredPeriodsWithStart:(NSDate *)start end:(NSDate *)end {
+- (void)caculateFineInterest:(FFFineInterestInputModel *)inputModel
+                     success:(void(^)(FFBaseOutputModel *result))success
+                     failure:(void(^)(NSError *error))failure {
     
-    NSArray *dateAndRateinfllectionArray = [[FFLoanInterestRateFactory sharedFactory] getLoanInterestRageArray];
+    NSAssert(inputModel, @"input model can't be nil!");
+    NSAssert(inputModel.princeple, @"input model's princeple can't be nil!");
+    NSAssert(inputModel.startDate, @"input model's startDate can't be nil!");
+    NSAssert(inputModel.endDate, @"input model's endDate can't be nil!");
     
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:2];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy.MM.dd"];
     
-    NSLog(@"add date is: %@", start);
-    [result addObject:start];
     
-    for (FFLoanInterestRateModel *model in dateAndRateinfllectionArray) {
-        
-        if ([model.startDate compare:start] == NSOrderedDescending &&
-            [model.startDate compare:end] == NSOrderedAscending) {
-            
-            NSLog(@"add date is: %@", model.startDate);
-            [result addObject:model.startDate];
-        }
-        
-        else {
-            break;
-        }
-        
+    NSString *startDate = [formatter stringFromDate:inputModel.startDate];
+    NSString *endDate = [formatter stringFromDate:inputModel.endDate];
+    
+    NSNumber *maxRate = inputModel.maxRate;
+    NSNumber *minRate = inputModel.minRate;
+    if (!maxRate) {
+        maxRate = @0;
+    }
+    if (!minRate) {
+        minRate = @0;
     }
     
-    NSLog(@"add date is: %@", end);
-    [result addObject:end];
+    NSDictionary *params = @{@"startDate":startDate, @"endDate":endDate, @"princeple":inputModel.princeple, @"maxRate":maxRate, @"minRate":minRate};
     
-    return result;
+    [self.httpClient getApi:@"caculate/fineInterest" params:params progress:^(NSProgress *downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if (success) {
+            NSDictionary *dic = responseObject[@"obj"];
+            FFBaseOutputModel *result = [FFBaseOutputModel yy_modelWithDictionary:dic];
+            success(result);
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        if (failure) {
+            failure(error);
+        }
+        
+    }];
 }
-
 @end
