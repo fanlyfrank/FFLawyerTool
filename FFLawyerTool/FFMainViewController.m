@@ -96,6 +96,7 @@
 #pragma mark - scrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self dismissKeyboard];
+    [self hideDatePickers];
 }
 
 #pragma mark - TSTView datasouce
@@ -158,6 +159,7 @@
 
 - (void)tstview:(TSTView *)tstview didSelectedTabAtIndex:(NSInteger)tabIndex {
     [self dismissKeyboard];
+    [self hideDatePickers];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -183,7 +185,6 @@
         FFFineInterestInputModel *realInputModel =  (FFFineInterestInputModel *)currentInputModel;
         realInputModel.maxRate =
         [NSNumber numberWithFloat:[text doubleValue]];
-        NSLog(@"--------------%@", text);
 
     }
     
@@ -245,7 +246,7 @@
             NSInteger currentIndex = [self.tstview indexForSelectedTab];
             if (currentIndex == 1) {
                 FFFineInterestInputView *fineInnerView = (FFFineInterestInputView *)realInnerView;
-                if ([self.datePicker.date compare:[dateformatter dateFromString:@"1996.04.30"]] == NSOrderedAscending) {
+                if ([self.datePicker.date compare:[dateformatter dateFromString:@"1996.05.01"]] == NSOrderedAscending) {
                     fineInnerView.minRateTextField.userInteractionEnabled = YES;
                     fineInnerView.minRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
                                                                             initWithString:@"输入1996.4.30前的利率"
@@ -256,6 +257,7 @@
                 else {
                     
                     fineInnerView.minRateTextField.userInteractionEnabled = NO;
+                    fineInnerView.minRateTextField.text = nil;
                     fineInnerView.minRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
                                                                             initWithString:@"暂不可用"
                                                                             attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
@@ -283,6 +285,7 @@
                 else {
                    
                     fineInnerView.maxRateTextField.userInteractionEnabled = NO;
+                    fineInnerView.maxRateTextField.text = nil;
                     fineInnerView.maxRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
                                                                             initWithString:@"暂不可用"
                                                                             attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
@@ -361,6 +364,15 @@
 - (void)showDatePickers {
     self.tabBarController.tabBar.hidden =YES;
     self.datePickerToobar.hidden = NO;
+    NSInteger tabIndex = [self.tstview indexForSelectedTab];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy.MM.dd";
+    if (tabIndex == 0) {
+        self.datePicker.minimumDate = [formatter dateFromString:@"1991.04.21"];
+        
+    } else if (tabIndex == 1) {
+        self.datePicker.minimumDate = [formatter dateFromString:@"1995.07.01"];
+    }
     self.datePicker.hidden = NO;
 }
 
@@ -397,7 +409,9 @@
         FFTSTInnerView *currentInnerView = self.innerViews[currentIndex];
         FFDelayPerformanceInputModel *currentInputModel = self.caculaterInputs[currentIndex];
         
-        [self checkInput:currentInnerView andSetCurrentInputModel:currentInputModel];
+        if (![self checkInput:currentInnerView]) {
+            return;
+        }
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.detailsLabelText = @"正在计算";
@@ -426,7 +440,10 @@
         FFTSTInnerView *currentInnerView = self.innerViews[currentIndex];
         FFFineInterestInputModel *currentInputModel = self.caculaterInputs[currentIndex];
         
-        [self checkInput:currentInnerView andSetCurrentInputModel:currentInputModel];
+        if (![self checkInput:currentInnerView]) {
+            return;
+        }
+        
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.detailsLabelText = @"正在计算";
         hud.removeFromSuperViewOnHide = YES;
@@ -449,16 +466,18 @@
     
 }
 
-- (void)checkInput:(FFTSTInnerView *)currentInnerView andSetCurrentInputModel:(FFBaseInputModel *)currentInputModel {
+- (BOOL)checkInput:(FFTSTInnerView *)currentInnerView {
     
     UITextField *currentPrincepleTextField = currentInnerView.principleTextField;
     NSString *startDateStr;
     NSString *endDateStr;
+    
     if ([currentInnerView isKindOfClass:[FFDelayPerformanceInputView class]]) {
         FFDelayPerformanceInputView *realInnerView = (FFDelayPerformanceInputView *)currentInnerView;
         startDateStr = realInnerView.startDateBtn.titleLabel.text;
         endDateStr = realInnerView.endDateBtn.titleLabel.text;
     }
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
     
@@ -467,45 +486,57 @@
     NSDate *endDate = [dateFormatter dateFromString:endDateStr];
     
     
-    if (currentPrinceple && [currentPrinceple doubleValue] > 0) {
-        currentInputModel.princeple = currentPrinceple;
-    }
-    
-    else {
+    if (!(currentPrinceple && [currentPrinceple doubleValue] > 0)) {
         [MBProgressHUD showToastWithTitle:@"请输入本金！" success:NO superContainer:self.view withDuration:2];
-        return;
+        return NO;
     }
     
     if (startDate) {
-        if ([currentInputModel isKindOfClass:[FFDelayPerformanceInputModel class]]) {
-            FFDelayPerformanceInputModel *realInputModel = (FFDelayPerformanceInputModel *)currentInputModel;
-            realInputModel.startDate = startDate;
+        NSInteger tabIndex = [self.tstview indexForSelectedTab];
+        if (tabIndex == 1) {
+            if ([startDate compare:[dateFormatter  dateFromString:@"1996年05月01日"]] == NSOrderedAscending) {
+                FFFineInterestInputView *fineInterestInputView = (FFFineInterestInputView *)currentInnerView;
+                if (!(fineInterestInputView.minRateTextField.text &&
+                    [fineInterestInputView.minRateTextField.text doubleValue])) {
+                    [MBProgressHUD showToastWithTitle:@"请输入1996年05月01日前的利率" success:NO superContainer:self.view withDuration:2];
+                    return NO;
+                }
+            }
         }
     }
     
     
     else {
         [MBProgressHUD showToastWithTitle:@"请选择起始时间！" success:NO superContainer:self.view withDuration:2];
-        return;
+        return NO;
     }
     
     if (endDate) {
-        if ([currentInputModel isKindOfClass:[FFDelayPerformanceInputModel class]]) {
-            FFDelayPerformanceInputModel *realInputModel = (FFDelayPerformanceInputModel *)currentInputModel;
-            realInputModel.endDate = endDate;
+        NSInteger tabIndex = [self.tstview indexForSelectedTab];
+        if (tabIndex == 1) {
+            if ([endDate compare:[dateFormatter  dateFromString:@"2004年01月01日"]] == NSOrderedDescending) {
+                FFFineInterestInputView *fineInterestInputView = (FFFineInterestInputView *)currentInnerView;
+                if (!(fineInterestInputView.maxRateTextField.text &&
+                      [fineInterestInputView.maxRateTextField.text doubleValue])) {
+                    [MBProgressHUD showToastWithTitle:@"请输入2004年01月01日后的利率" success:NO superContainer:self.view withDuration:2];
+                    return NO;
+                }
+            }
         }
     }
     
     else {
         [MBProgressHUD showToastWithTitle:@"请选择结束时间！" success:NO superContainer:self.view withDuration:2];
-        return;
+        return NO;
     }
     
     if ([startDate compare:endDate] == NSOrderedDescending ||
         [startDate compare:endDate] == NSOrderedSame) {
         [MBProgressHUD showToastWithTitle:@"起始日期在结束日期之后或相等！" success:NO superContainer:self.view withDuration:2];
-        return;
+        return NO;
     }
+    
+    return YES;
 }
 
 - (void)showCaculateResult:(FFBaseOutputModel *)result {

@@ -24,7 +24,7 @@
     self.minRateTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     self.minRateTextField.attributedPlaceholder =
     [[NSAttributedString alloc]
-     initWithString:@"暂不可用！"
+     initWithString:@"暂不可用"
      attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     self.minRateTextField.keyboardType = UIKeyboardTypeDecimalPad;
     
@@ -37,7 +37,7 @@
     self.maxRateTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     self.maxRateTextField.attributedPlaceholder =
     [[NSAttributedString alloc]
-     initWithString:@"暂不可用！"
+     initWithString:@"暂不可用"
      attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     self.maxRateTextField.keyboardType = UIKeyboardTypeDecimalPad;
     

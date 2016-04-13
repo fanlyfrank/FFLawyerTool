@@ -35,7 +35,7 @@ static HttpClient *_sharedClient;
         NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         sessionConfiguration.timeoutIntervalForRequest = 40.0;
         
-        _sharedClient = [[HttpClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://192.168.5.24:8080/"]
+        _sharedClient = [[HttpClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://fanlyfrank-lawyertool.daoapp.io/LawyerTool/"]
                                        sessionConfiguration:sessionConfiguration];
         // 接收时的contenttype
         _sharedClient.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain",
