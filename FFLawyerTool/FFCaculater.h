@@ -10,6 +10,7 @@
 
 @class FFDelayPerformanceInputModel;
 @class FFFineInterestInputModel;
+@class FFCountableInputModel;
 @class FFBaseOutputModel;
 
 @interface FFCaculater : NSObject
@@ -23,4 +24,8 @@
 - (void)caculateFineInterest:(FFFineInterestInputModel *)inputModel
                      success:(void(^)(FFBaseOutputModel *result))success
                      failure:(void(^)(NSError *error))failure;
+
+- (void)caculateMaintenamce:(FFCountableInputModel *)inputModel
+                    success:(void(^)(FFBaseOutputModel *result))success
+                    failure:(void(^)(NSError *error))failure;
 @end

@@ -10,6 +10,7 @@
 #import "FFTSTInnerView.h"
 #import "FFDelayPerformanceInputView.h"
 #import "FFFineInterestInputView.h"
+#import "FFCountableInputView.h"
 
 @implementation FFTSTInnerViewFactory
 
@@ -39,6 +40,10 @@
            
         case FFTSTInnerViewTypeFineInterest:
             result = [[FFFineInterestInputView alloc] init];
+            break;
+            
+        case FFTSTInnerViewTypeMaintenamce:
+            result = [[FFCountableInputView alloc] init];
             break;
             
         default:

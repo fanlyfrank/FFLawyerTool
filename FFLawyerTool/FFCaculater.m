@@ -12,6 +12,7 @@
 #import "FFDelayPerformanceInputModel.h"
 #import "FFFineInterestInputModel.h"
 #import "FFBaseOutputModel.h"
+#import "FFCountableInputModel.h"
 #import "FFLoanInterestRateFactory.h"
 #import "FFLoanInterestRateModel.h"
 #import "HttpClient.h"
@@ -130,5 +131,41 @@
         }
         
     }];
+}
+
+- (void)caculateMaintenamce:(FFCountableInputModel *)inputModel
+                    success:(void(^)(FFBaseOutputModel *result))success
+                    failure:(void(^)(NSError *error))failure {
+    
+    NSAssert(inputModel, @"input model can't be nil!");
+    
+    NSNumber *princeple = inputModel.princeple;
+    NSNumber *count = inputModel.count;
+    if (!princeple) {
+        princeple = @0;
+    }
+    if (!count) {
+        count = @0;
+    }
+    
+    NSDictionary *params = @{@"princeple":princeple, @"count":count};
+    
+    [self.httpClient getApi:@"caculate/maintenamceCosts" params:params progress:^(NSProgress *downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if (success) {
+            NSDictionary *dic = responseObject[@"obj"];
+            FFBaseOutputModel *result = [FFBaseOutputModel yy_modelWithDictionary:dic];
+            success(result);
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
 }
 @end

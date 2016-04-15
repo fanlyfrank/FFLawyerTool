@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3577DFA31CC0BECD004E14C2 /* FFCountableInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3577DFA21CC0BECD004E14C2 /* FFCountableInputView.m */; };
+		3577DFA61CC0C526004E14C2 /* FFCountableInputModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3577DFA51CC0C526004E14C2 /* FFCountableInputModel.m */; };
 		35A5930E1CB24E1B00AD0559 /* FFBaseInputModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A5930D1CB24E1B00AD0559 /* FFBaseInputModel.m */; };
 		35A593111CB24EB800AD0559 /* FFBaseOutputModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A593101CB24EB800AD0559 /* FFBaseOutputModel.m */; };
 		35A593141CB24F7800AD0559 /* FFCaculater.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A593131CB24F7800AD0559 /* FFCaculater.m */; };
@@ -51,6 +53,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3577DFA11CC0BECD004E14C2 /* FFCountableInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFCountableInputView.h; sourceTree = "<group>"; };
+		3577DFA21CC0BECD004E14C2 /* FFCountableInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFCountableInputView.m; sourceTree = "<group>"; };
+		3577DFA41CC0C526004E14C2 /* FFCountableInputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFCountableInputModel.h; sourceTree = "<group>"; };
+		3577DFA51CC0C526004E14C2 /* FFCountableInputModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFCountableInputModel.m; sourceTree = "<group>"; };
 		35A5930C1CB24E1B00AD0559 /* FFBaseInputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFBaseInputModel.h; sourceTree = "<group>"; };
 		35A5930D1CB24E1B00AD0559 /* FFBaseInputModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFBaseInputModel.m; sourceTree = "<group>"; };
 		35A5930F1CB24EB800AD0559 /* FFBaseOutputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFBaseOutputModel.h; sourceTree = "<group>"; };
@@ -215,6 +221,8 @@
 				35F313B71CBCD7480060861D /* FFDelayPerformanceInputView.m */,
 				35F313B91CBCDC830060861D /* FFFineInterestInputView.h */,
 				35F313BA1CBCDC830060861D /* FFFineInterestInputView.m */,
+				3577DFA11CC0BECD004E14C2 /* FFCountableInputView.h */,
+				3577DFA21CC0BECD004E14C2 /* FFCountableInputView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -238,6 +246,8 @@
 				35F313BD1CBCE61B0060861D /* FFDelayPerformanceInputModel.m */,
 				35F313BF1CBCE6B60060861D /* FFFineInterestInputModel.h */,
 				35F313C01CBCE6B60060861D /* FFFineInterestInputModel.m */,
+				3577DFA41CC0C526004E14C2 /* FFCountableInputModel.h */,
+				3577DFA51CC0C526004E14C2 /* FFCountableInputModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -477,10 +487,12 @@
 				35A593211CB4C5DB00AD0559 /* FFTSTInnerView.m in Sources */,
 				35BCCB421CAE3FBD00A1E9F0 /* AppDelegate.m in Sources */,
 				35A593111CB24EB800AD0559 /* FFBaseOutputModel.m in Sources */,
+				3577DFA61CC0C526004E14C2 /* FFCountableInputModel.m in Sources */,
 				35F313B51CBC9D2A0060861D /* FFOutputPartModel.m in Sources */,
 				35F313B81CBCD7480060861D /* FFDelayPerformanceInputView.m in Sources */,
 				35F313C11CBCE6B60060861D /* FFFineInterestInputModel.m in Sources */,
 				35BCCB3F1CAE3FBD00A1E9F0 /* main.m in Sources */,
+				3577DFA31CC0BECD004E14C2 /* FFCountableInputView.m in Sources */,
 				35A593181CB25AD800AD0559 /* MBProgressHUD+Addition.m in Sources */,
 				35F313BB1CBCDC830060861D /* FFFineInterestInputView.m in Sources */,
 				35A593141CB24F7800AD0559 /* FFCaculater.m in Sources */,

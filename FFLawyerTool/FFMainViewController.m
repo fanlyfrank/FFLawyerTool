@@ -16,11 +16,16 @@
 #import "FFTSTInnerView.h"
 #import "FFDelayPerformanceInputView.h"
 #import "FFFineInterestInputView.h"
+#import "FFCountableInputView.h"
 
 #import "FFCaculater.h"
+
 #import "FFDelayPerformanceInputModel.h"
 #import "FFFineInterestInputModel.h"
+#import "FFCountableInputModel.h"
+
 #import "FFBaseOutputModel.h"
+
 #import "FFCaculateResultDetialViewController.h"
 
 #import "MBProgressHUD+Addition.h"
@@ -63,9 +68,9 @@
     
     _caculaterInputs = @[[FFDelayPerformanceInputModel new],
                          [FFFineInterestInputModel new],
-                         [FFBaseInputModel new],
-                         [FFBaseInputModel new],
-                         [FFBaseInputModel new]];
+                         [FFCountableInputModel new],
+                         [FFCountableInputModel new],
+                         [FFCountableInputModel new]];
     
     //setting views
     _innerViewFactory = [FFTSTInnerViewFactory sharedFactory];
@@ -172,20 +177,25 @@
     if (textField.tag == 0) {
         
         currentInputModel.princeple =
-        [NSNumber numberWithFloat:[text doubleValue]];
+        [NSNumber numberWithDouble:[text doubleValue]];
         
     } else if (textField.tag == 1) {
         
         FFFineInterestInputModel *realInputModel =  (FFFineInterestInputModel *)currentInputModel;
         realInputModel.minRate =
-        [NSNumber numberWithFloat:[text doubleValue]];
+        [NSNumber numberWithDouble:[text doubleValue]];
         
     } else if (textField.tag == 2) {
         
         FFFineInterestInputModel *realInputModel =  (FFFineInterestInputModel *)currentInputModel;
         realInputModel.maxRate =
-        [NSNumber numberWithFloat:[text doubleValue]];
+        [NSNumber numberWithDouble:[text doubleValue]];
 
+    } else if (textField.tag == 3) {
+        
+        FFCountableInputModel *realInputMode = (FFCountableInputModel *)currentInputModel;
+        realInputMode.count =
+        [NSNumber numberWithLong:[text longLongValue]];
     }
     
     
@@ -400,6 +410,7 @@
 }
 
 - (void)calculate:(UIButton *)sender {
+    [self dismissKeyboard];
     [self hideDatePickers];
     NSInteger currentIndex = [self.tstview indexForSelectedTab];
     
@@ -462,6 +473,33 @@
                                                               withDuration:1.5];
                                          
                                      }];
+    } else if (currentIndex == 2) {
+        
+        FFTSTInnerView *currentInnerView = self.innerViews[currentIndex];
+        FFCountableInputModel *currentInputModel = self.caculaterInputs[currentIndex];
+        
+        if (![self checkInput:currentInnerView]) {
+            return;
+        }
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.detailsLabelText = @"正在计算";
+        hud.removeFromSuperViewOnHide = YES;
+        [self.caculater caculateMaintenamce:currentInputModel
+                                    success:^(FFBaseOutputModel *result) {
+            
+                                        [hud hide:YES];
+                                        [self showCaculateResult:result];
+                                        
+                                    } failure:^(NSError *error) {
+                                        
+                                        [hud hide:YES];
+                                        [MBProgressHUD showToastWithTitle:[error description]
+                                                                  success:NO
+                                                           superContainer:self.view
+                                                             withDuration:1.5];
+                                    }];
+        
     }
     
 }
@@ -469,71 +507,96 @@
 - (BOOL)checkInput:(FFTSTInnerView *)currentInnerView {
     
     UITextField *currentPrincepleTextField = currentInnerView.principleTextField;
-    NSString *startDateStr;
-    NSString *endDateStr;
-    
-    if ([currentInnerView isKindOfClass:[FFDelayPerformanceInputView class]]) {
-        FFDelayPerformanceInputView *realInnerView = (FFDelayPerformanceInputView *)currentInnerView;
-        startDateStr = realInnerView.startDateBtn.titleLabel.text;
-        endDateStr = realInnerView.endDateBtn.titleLabel.text;
-    }
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
+    NSInteger tabIndex = [self.tstview indexForSelectedTab];
     
     NSNumber *currentPrinceple = [NSNumber numberWithDouble:[currentPrincepleTextField.text doubleValue]];
-    NSDate *startDate = [dateFormatter dateFromString:startDateStr];
-    NSDate *endDate = [dateFormatter dateFromString:endDateStr];
-    
     
     if (!(currentPrinceple && [currentPrinceple doubleValue] > 0)) {
-        [MBProgressHUD showToastWithTitle:@"请输入本金！" success:NO superContainer:self.view withDuration:2];
+        NSString *showString;
+        if (tabIndex < 2) {
+            showString = @"请输入本金！";
+        }
+        
+        else if (tabIndex == 2) {
+            showString = @"请输入保全财产估价!";
+        }
+        
+        [MBProgressHUD showToastWithTitle:showString success:NO superContainer:self.view withDuration:2];
+        
         return NO;
     }
     
-    if (startDate) {
-        NSInteger tabIndex = [self.tstview indexForSelectedTab];
-        if (tabIndex == 1) {
-            if ([startDate compare:[dateFormatter  dateFromString:@"1996年05月01日"]] == NSOrderedAscending) {
-                FFFineInterestInputView *fineInterestInputView = (FFFineInterestInputView *)currentInnerView;
-                if (!(fineInterestInputView.minRateTextField.text &&
-                    [fineInterestInputView.minRateTextField.text doubleValue])) {
-                    [MBProgressHUD showToastWithTitle:@"请输入1996年05月01日前的利率" success:NO superContainer:self.view withDuration:2];
-                    return NO;
-                }
-            }
+    if (tabIndex == 2 && [currentPrinceple doubleValue] < 1000) {
+        FFCountableInputView *realInnerView = (FFCountableInputView *)currentInnerView;
+        NSNumber *count = [NSNumber numberWithDouble:[realInnerView.countTextField.text doubleValue]];
+        if (!(count && [count doubleValue] > 0)) {
+            [MBProgressHUD showToastWithTitle:@"财产估价小于1000元，请输入财产件数！" success:NO superContainer:self.view withDuration:2];
+            return NO;
         }
     }
     
-    
-    else {
-        [MBProgressHUD showToastWithTitle:@"请选择起始时间！" success:NO superContainer:self.view withDuration:2];
-        return NO;
-    }
-    
-    if (endDate) {
-        NSInteger tabIndex = [self.tstview indexForSelectedTab];
-        if (tabIndex == 1) {
-            if ([endDate compare:[dateFormatter  dateFromString:@"2004年01月01日"]] == NSOrderedDescending) {
-                FFFineInterestInputView *fineInterestInputView = (FFFineInterestInputView *)currentInnerView;
-                if (!(fineInterestInputView.maxRateTextField.text &&
-                      [fineInterestInputView.maxRateTextField.text doubleValue])) {
-                    [MBProgressHUD showToastWithTitle:@"请输入2004年01月01日后的利率" success:NO superContainer:self.view withDuration:2];
-                    return NO;
+    else if (tabIndex < 2) {
+        NSString *startDateStr;
+        NSString *endDateStr;
+        
+        if ([currentInnerView isKindOfClass:[FFDelayPerformanceInputView class]]) {
+            FFDelayPerformanceInputView *realInnerView = (FFDelayPerformanceInputView *)currentInnerView;
+            startDateStr = realInnerView.startDateBtn.titleLabel.text;
+            endDateStr = realInnerView.endDateBtn.titleLabel.text;
+        }
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
+        
+        
+        NSDate *startDate = [dateFormatter dateFromString:startDateStr];
+        NSDate *endDate = [dateFormatter dateFromString:endDateStr];
+        
+        if (startDate) {
+            NSInteger tabIndex = [self.tstview indexForSelectedTab];
+            if (tabIndex == 1) {
+                if ([startDate compare:[dateFormatter  dateFromString:@"1996年05月01日"]] == NSOrderedAscending) {
+                    FFFineInterestInputView *fineInterestInputView = (FFFineInterestInputView *)currentInnerView;
+                    if (!(fineInterestInputView.minRateTextField.text &&
+                          [fineInterestInputView.minRateTextField.text doubleValue])) {
+                        [MBProgressHUD showToastWithTitle:@"请输入1996年05月01日前的利率" success:NO superContainer:self.view withDuration:2];
+                        return NO;
+                    }
                 }
             }
         }
-    }
-    
-    else {
-        [MBProgressHUD showToastWithTitle:@"请选择结束时间！" success:NO superContainer:self.view withDuration:2];
-        return NO;
-    }
-    
-    if ([startDate compare:endDate] == NSOrderedDescending ||
-        [startDate compare:endDate] == NSOrderedSame) {
-        [MBProgressHUD showToastWithTitle:@"起始日期在结束日期之后或相等！" success:NO superContainer:self.view withDuration:2];
-        return NO;
+        
+        
+        else {
+            
+            [MBProgressHUD showToastWithTitle:@"请选择起始时间！" success:NO superContainer:self.view withDuration:2];
+            return NO;
+        }
+        
+        if (endDate) {
+            NSInteger tabIndex = [self.tstview indexForSelectedTab];
+            if (tabIndex == 1) {
+                if ([endDate compare:[dateFormatter  dateFromString:@"2004年01月01日"]] == NSOrderedDescending) {
+                    FFFineInterestInputView *fineInterestInputView = (FFFineInterestInputView *)currentInnerView;
+                    if (!(fineInterestInputView.maxRateTextField.text &&
+                          [fineInterestInputView.maxRateTextField.text doubleValue])) {
+                        [MBProgressHUD showToastWithTitle:@"请输入2004年01月01日后的利率" success:NO superContainer:self.view withDuration:2];
+                        return NO;
+                    }
+                }
+            }
+        }
+        
+        else {
+            [MBProgressHUD showToastWithTitle:@"请选择结束时间！" success:NO superContainer:self.view withDuration:2];
+            return NO;
+        }
+        
+        if ([startDate compare:endDate] == NSOrderedDescending ||
+            [startDate compare:endDate] == NSOrderedSame) {
+            [MBProgressHUD showToastWithTitle:@"起始日期在结束日期之后或相等！" success:NO superContainer:self.view withDuration:2];
+            return NO;
+        }
     }
     
     return YES;
@@ -572,10 +635,13 @@
     
     FFTSTInnerView *innerView;
     if (self.innerViews[tabIndex] == [NSNull null]) {
-        if (tabIndex != 1) {
+        
+        if (tabIndex == 0) {
             innerView = [self.innerViewFactory creatInnerViewByType:FFTSTInnerViewTypeDeferredUtion];
-        } else {
+        } else if (tabIndex == 1) {
             innerView = [self.innerViewFactory creatInnerViewByType:FFTSTInnerViewTypeFineInterest];
+        } else {
+            innerView = [self.innerViewFactory creatInnerViewByType:FFTSTInnerViewTypeMaintenamce];
         }
         
         [self.innerViews replaceObjectAtIndex:tabIndex withObject:innerView];
@@ -622,6 +688,12 @@
         realInnerView.minRateTextField.delegate = self;
     }
     
+    if ([innerView isKindOfClass:[FFCountableInputView class]]) {
+        
+        FFCountableInputView *realInnerView = (FFCountableInputView *)innerView;
+        realInnerView.countTextField.delegate = self;
+    }
+         
     [innerView.startCalculateBtn
      addTarget:self
      action:@selector(calculate:)

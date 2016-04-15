@@ -13,6 +13,7 @@
 typedef NS_ENUM(NSInteger, FFTSTInnerViewType) {
     FFTSTInnerViewTypeDeferredUtion,
     FFTSTInnerViewTypeFineInterest,
+    FFTSTInnerViewTypeMaintenamce,
 };
 
 @interface FFTSTInnerViewFactory : NSObject
