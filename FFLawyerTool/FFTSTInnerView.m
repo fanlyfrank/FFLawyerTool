@@ -8,6 +8,7 @@
 
 #import <Masonry/Masonry.h>
 #import "FFTSTInnerView.h"
+#import "FFGlobalMacro.h"
 
 @implementation FFTSTInnerView
 
@@ -53,18 +54,20 @@
     
     _principleTextField = [[UITextField alloc] init];
     self.principleTextField.tag = 0;
-    self.principleTextField.backgroundColor = [UIColor blueColor];
+    self.principleTextField.backgroundColor = FFMainColor;
     self.principleTextField.textAlignment = NSTextAlignmentCenter;
-    self.principleTextField.textColor = [UIColor redColor];
+    self.principleTextField.textColor = [UIColor whiteColor];
     self.principleTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     self.principleTextField.attributedPlaceholder =
     [[NSAttributedString alloc]
      initWithString:@"输入本金"
      attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    self.principleTextField.tintColor = [UIColor whiteColor];
     self.principleTextField.keyboardType = UIKeyboardTypeDecimalPad;
     
     _startCalculateBtn = [[UIButton alloc] init];
-    self.startCalculateBtn.backgroundColor = [UIColor blueColor];
+    //self.startCalculateBtn.backgroundColor = FFMainColor;
+    [self.startCalculateBtn setBackgroundImage:[UIImage imageNamed:@"btn_bg"] forState:UIControlStateNormal];
     [self.startCalculateBtn setTitle:@"开始计算" forState:UIControlStateNormal];
     self.startCalculateBtn.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     

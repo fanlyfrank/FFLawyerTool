@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "FFGlobalMacro.h"
+#import "UIImage+Utils.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +18,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageWithColor:FFMainColor] forBarMetrics:UIBarMetricsDefault];
+    
     self.window.backgroundColor = [UIColor whiteColor];
     return YES;
 }

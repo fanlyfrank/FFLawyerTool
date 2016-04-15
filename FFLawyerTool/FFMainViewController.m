@@ -30,6 +30,8 @@
 
 #import "MBProgressHUD+Addition.h"
 
+#import "FFGlobalMacro.h"
+
 
 @interface FFMainViewController () <UIScrollViewDelegate, UITextFieldDelegate, TSTViewDataSource, TSTViewDelegate>
 
@@ -147,7 +149,7 @@
 }
 
 - (UIColor *)highlightColorForTSTView:(TSTView *)tstview {
-    return [UIColor blueColor];
+    return FFMainColor;
 }
 
 - (UIColor *)normalColorForTSTView:(TSTView *)tstview {
@@ -159,7 +161,7 @@
 }
 
 - (UIColor *)normalColorForSeparatorInTSTView:(TSTView *)tstview {
-    return [UIColor blueColor];
+    return FFMainColor;
 }
 
 - (void)tstview:(TSTView *)tstview didSelectedTabAtIndex:(NSInteger)tabIndex {
@@ -261,7 +263,7 @@
                     fineInnerView.minRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
                                                                             initWithString:@"输入1996.4.30前的利率"
                                                                             attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-                    fineInnerView.minRateTextField.backgroundColor = [UIColor blueColor];
+                    fineInnerView.minRateTextField.backgroundColor = FFMainColor;
                 }
                 
                 else {
@@ -289,7 +291,7 @@
                     fineInnerView.maxRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
                                                                             initWithString:@"输入2014.1.1后的利率"
                                                                             attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-                    fineInnerView.maxRateTextField.backgroundColor = [UIColor blueColor];
+                    fineInnerView.maxRateTextField.backgroundColor = FFMainColor;
                 }
                 
                 else {

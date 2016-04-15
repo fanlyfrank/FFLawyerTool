@@ -8,6 +8,7 @@
 #import <Masonry/Masonry.h>
 
 #import "FFCountableInputView.h"
+#import "FFGlobalMacro.h"
 
 @implementation FFCountableInputView
 
@@ -22,7 +23,7 @@
     
     _countTextField = [[UITextField alloc] init];
     self.countTextField.tag = 3;
-    self.countTextField.backgroundColor = [UIColor blueColor];
+    self.countTextField.backgroundColor = FFMainColor;
     self.countTextField.textAlignment = NSTextAlignmentCenter;
     self.countTextField.textColor = [UIColor redColor];
     self.countTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];

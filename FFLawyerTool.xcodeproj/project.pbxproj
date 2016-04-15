@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3577DFA31CC0BECD004E14C2 /* FFCountableInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3577DFA21CC0BECD004E14C2 /* FFCountableInputView.m */; };
 		3577DFA61CC0C526004E14C2 /* FFCountableInputModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3577DFA51CC0C526004E14C2 /* FFCountableInputModel.m */; };
+		3577DFAB1CC0E430004E14C2 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3577DFAA1CC0E430004E14C2 /* UIImage+Utils.m */; };
 		35A5930E1CB24E1B00AD0559 /* FFBaseInputModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A5930D1CB24E1B00AD0559 /* FFBaseInputModel.m */; };
 		35A593111CB24EB800AD0559 /* FFBaseOutputModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A593101CB24EB800AD0559 /* FFBaseOutputModel.m */; };
 		35A593141CB24F7800AD0559 /* FFCaculater.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A593131CB24F7800AD0559 /* FFCaculater.m */; };
@@ -57,6 +58,9 @@
 		3577DFA21CC0BECD004E14C2 /* FFCountableInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFCountableInputView.m; sourceTree = "<group>"; };
 		3577DFA41CC0C526004E14C2 /* FFCountableInputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFCountableInputModel.h; sourceTree = "<group>"; };
 		3577DFA51CC0C526004E14C2 /* FFCountableInputModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFCountableInputModel.m; sourceTree = "<group>"; };
+		3577DFA81CC0E24E004E14C2 /* FFGlobalMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFGlobalMacro.h; sourceTree = "<group>"; };
+		3577DFA91CC0E430004E14C2 /* UIImage+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Utils.h"; sourceTree = "<group>"; };
+		3577DFAA1CC0E430004E14C2 /* UIImage+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utils.m"; sourceTree = "<group>"; };
 		35A5930C1CB24E1B00AD0559 /* FFBaseInputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFBaseInputModel.h; sourceTree = "<group>"; };
 		35A5930D1CB24E1B00AD0559 /* FFBaseInputModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFBaseInputModel.m; sourceTree = "<group>"; };
 		35A5930F1CB24EB800AD0559 /* FFBaseOutputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFBaseOutputModel.h; sourceTree = "<group>"; };
@@ -134,9 +138,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3577DFA71CC0E227004E14C2 /* Macros */ = {
+			isa = PBXGroup;
+			children = (
+				3577DFA81CC0E24E004E14C2 /* FFGlobalMacro.h */,
+			);
+			name = Macros;
+			sourceTree = "<group>";
+		};
 		35A593151CB25AA800AD0559 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				3577DFA91CC0E430004E14C2 /* UIImage+Utils.h */,
+				3577DFAA1CC0E430004E14C2 /* UIImage+Utils.m */,
 				35A593161CB25AD800AD0559 /* MBProgressHUD+Addition.h */,
 				35A593171CB25AD800AD0559 /* MBProgressHUD+Addition.m */,
 			);
@@ -266,6 +280,7 @@
 		35F313AB1CBC87AD0060861D /* Facility */ = {
 			isa = PBXGroup;
 			children = (
+				3577DFA71CC0E227004E14C2 /* Macros */,
 				35F313AC1CBC87BD0060861D /* Network */,
 			);
 			name = Facility;
@@ -482,6 +497,7 @@
 				35A5931B1CB26BE900AD0559 /* FFCaculateResultDetialViewController.m in Sources */,
 				35F313A71CB788E10060861D /* FFLoanInterestRateModel.m in Sources */,
 				35F313BE1CBCE61B0060861D /* FFDelayPerformanceInputModel.m in Sources */,
+				3577DFAB1CC0E430004E14C2 /* UIImage+Utils.m in Sources */,
 				35BCCB451CAE3FBD00A1E9F0 /* FFMainViewController.m in Sources */,
 				35A5931E1CB4C5B700AD0559 /* FFTSTInnerViewFactory.m in Sources */,
 				35A593211CB4C5DB00AD0559 /* FFTSTInnerView.m in Sources */,

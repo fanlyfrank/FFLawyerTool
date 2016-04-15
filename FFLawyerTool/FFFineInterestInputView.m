@@ -18,7 +18,7 @@
     _minRateTextField = [[UITextField alloc] init];
     self.minRateTextField.tag = 1;
     self.minRateTextField.userInteractionEnabled = NO;
-    self.minRateTextField.textColor = [UIColor redColor];
+    self.minRateTextField.textColor = [UIColor whiteColor];
     self.minRateTextField.backgroundColor = [UIColor grayColor];
     self.minRateTextField.textAlignment = NSTextAlignmentCenter;
     self.minRateTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
@@ -27,11 +27,12 @@
      initWithString:@"暂不可用"
      attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     self.minRateTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    self.minRateTextField.tintColor = [UIColor whiteColor];
     
     _maxRateTextField = [[UITextField alloc] init];
     self.maxRateTextField.tag = 2;
     self.maxRateTextField.userInteractionEnabled = NO;
-    self.maxRateTextField.textColor = [UIColor redColor];
+    self.maxRateTextField.textColor = [UIColor whiteColor];
     self.maxRateTextField.backgroundColor = [UIColor grayColor];
     self.maxRateTextField.textAlignment = NSTextAlignmentCenter;
     self.maxRateTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
@@ -40,6 +41,7 @@
      initWithString:@"暂不可用"
      attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     self.maxRateTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    self.maxRateTextField.tintColor = [UIColor whiteColor];
     
     [self addSubview:self.minRateTextField];
     [self addSubview:self.maxRateTextField];
