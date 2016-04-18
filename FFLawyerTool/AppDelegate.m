@@ -23,7 +23,7 @@
     [[UINavigationBar appearance] setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageWithColor:FFMainColor] forBarMetrics:UIBarMetricsDefault];
-    
+    [[UINavigationBar appearance] setTranslucent:NO];
     self.window.backgroundColor = [UIColor whiteColor];
     return YES;
 }

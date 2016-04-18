@@ -39,7 +39,7 @@
 
 @property (strong, nonatomic) NSArray *tabDatas;
 
-@property (strong, nonatomic) UIView *datePickerToobar;
+@property (strong, nonatomic) UIVisualEffectView *datePickerToolbar;
 
 @property (strong, nonatomic) UIDatePicker *datePicker;
 
@@ -85,7 +85,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     CGRect frame = self.view.frame;
-    frame.origin.y  = 64;
+    //frame.origin.y  = 64;
     
     _tstview = [[TSTView alloc] initWithFrame:frame];
     
@@ -306,34 +306,34 @@
             }
         }
     }
-    
-    
-    NSLog(@"selete date is %@", self.datePicker.date);
 }
 
 - (void)initDatePickers {
-    _datePickerToobar = [[UIView alloc] init];
-    self.datePickerToobar.backgroundColor = [UIColor whiteColor];
+    _datePickerToolbar = [[UIVisualEffectView alloc] init];
+    self.datePickerToolbar.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIView *separator = [[UIView alloc] init];
+    separator.backgroundColor = [UIColor grayColor];
     
     UIButton *cancleDatePickerBtn = [[UIButton alloc] init];
-    cancleDatePickerBtn.backgroundColor = [UIColor redColor];
+    [cancleDatePickerBtn setBackgroundImage:[UIImage imageNamed:@"btn_cancle_bg"] forState:UIControlStateNormal];
     [cancleDatePickerBtn setTitle:@"取消" forState:UIControlStateNormal];
     cancleDatePickerBtn.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
     [cancleDatePickerBtn addTarget:self action:@selector(cancleDatePicker:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *selectDatePickerBtn = [[UIButton alloc] init];
-    selectDatePickerBtn.backgroundColor = [UIColor grayColor];
+    [selectDatePickerBtn setBackgroundImage:[UIImage imageNamed:@"btn_bg"] forState:UIControlStateNormal];
     [selectDatePickerBtn setTitle:@"确定" forState:UIControlStateNormal];
     selectDatePickerBtn.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
     [selectDatePickerBtn addTarget:self action:@selector(selecteDate:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.datePickerToobar addSubview:cancleDatePickerBtn];
-    [self.datePickerToobar addSubview:selectDatePickerBtn];
+    [self.datePickerToolbar.contentView addSubview:cancleDatePickerBtn];
+    [self.datePickerToolbar.contentView addSubview:selectDatePickerBtn];
+    [self.datePickerToolbar.contentView addSubview:separator];
     
     self.datePicker = [[UIDatePicker alloc] init];
     self.datePicker.datePickerMode = UIDatePickerModeDate;
     
-    [self.view addSubview:self.datePickerToobar];
+    [self.view addSubview:self.datePickerToolbar];
     [self.view addSubview:self.datePicker];
     
     
@@ -344,7 +344,7 @@
         make.bottom.equalTo(self.view.mas_bottom).with.offset(0);
     }];
     
-    [self.datePickerToobar mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.datePickerToolbar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@244);
         make.left.equalTo(self.view.mas_left).with.offset(0);
         make.right.equalTo(self.view.mas_right).with.offset(0);
@@ -352,40 +352,51 @@
     }];
     
     [cancleDatePickerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.datePickerToobar.mas_left).with.offset(10);
-        make.top.equalTo(self.datePickerToobar.mas_top).with.offset(5);
+        make.left.equalTo(self.datePickerToolbar.mas_left).with.offset(10);
+        make.top.equalTo(self.datePickerToolbar.mas_top).with.offset(12);
         make.width.equalTo(@44);
         make.height.equalTo(@44);
     }];
     
     [selectDatePickerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.datePickerToobar.mas_right).with.offset(-10);
-        make.top.equalTo(self.datePickerToobar.mas_top).with.offset(5);
+        make.right.equalTo(self.datePickerToolbar.mas_right).with.offset(-10);
+        make.top.equalTo(self.datePickerToolbar.mas_top).with.offset(12);
         make.width.equalTo(@44);
         make.height.equalTo(@44);
+    }];
+    
+    [separator mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.datePickerToolbar.mas_right).with.offset(0);
+        make.left.equalTo(self.datePickerToolbar.mas_left).with.offset(0);
+        make.top.equalTo(self.datePickerToolbar.mas_top).with.offset(0);
+        make.height.equalTo(@.5);
     }];
 
 }
 
 - (void)hideDatePickers {
     self.tabBarController.tabBar.hidden = NO;
-    self.datePickerToobar.hidden = YES;
+    self.datePickerToolbar.hidden = YES;
     self.datePicker.hidden = YES;
 }
 
 - (void)showDatePickers {
-    self.tabBarController.tabBar.hidden =YES;
-    self.datePickerToobar.hidden = NO;
+    self.tabBarController.tabBar.hidden = YES;
+    self.datePickerToolbar.hidden = NO;
+    self.datePicker.hidden = NO;
+    
     NSInteger tabIndex = [self.tstview indexForSelectedTab];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy.MM.dd";
+    
     if (tabIndex == 0) {
         self.datePicker.minimumDate = [formatter dateFromString:@"1991.04.21"];
         
     } else if (tabIndex == 1) {
         self.datePicker.minimumDate = [formatter dateFromString:@"1995.07.01"];
     }
-    self.datePicker.hidden = NO;
+    
+    
 }
 
 - (void)dateTips:(UIButton *)sender {

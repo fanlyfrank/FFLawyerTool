@@ -8,8 +8,12 @@
 
 #import "FFCaculateResultDetialViewController.h"
 #import "FFOutputPartModel.h"
+#import "FFResultDetialCell.h"
+#import "FFGlobalMacro.h"
 
 @interface FFCaculateResultDetialViewController ()
+
+@property (assign, nonatomic) CGFloat headerHeight;
 
 @end
 
@@ -30,6 +34,11 @@
                                      style:UIBarButtonItemStylePlain
                                     target:self
                                     action:@selector(export)];
+    [self.tableView registerClass:[FFResultDetialCell class]
+           forCellReuseIdentifier:NSStringFromClass([FFResultDetialCell class])];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([FFResultDetialCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([FFResultDetialCell class])];
+    self.tableView.estimatedRowHeight = 90;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 #pragma mark - Table view data source
@@ -44,38 +53,50 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FFOutputPartModel *lineData = self.resultNeedDisplay.parts[indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"resultCell" forIndexPath:indexPath];
     
-    cell.textLabel.text =
-    [NSString stringWithFormat:@"期间：%@~%@:共%@天", lineData.startDate, lineData.endDate,  lineData.diffDays];
-    cell.detailTextLabel.textColor = [UIColor redColor];
-    cell.detailTextLabel.text =
-    [NSString stringWithFormat:@"金额：%0.2f", [lineData.amount doubleValue]];
+    FFOutputPartModel *lineData = self.resultNeedDisplay.parts[indexPath.row];
+    
+    FFResultDetialCell *cell =
+    [tableView dequeueReusableCellWithIdentifier:
+     NSStringFromClass([FFResultDetialCell class])];
+    
+    cell.diffDaysL.text = [NSString stringWithFormat:@"%@~%@", lineData.startDate, lineData.endDate];
+    cell.amountL.text = [NSString stringWithFormat:@"%@天", lineData.diffDays];
+    cell.rateL.text = [NSString stringWithFormat:@"%.4f%%", [lineData.rate doubleValue] * 100];
+    
+    cell.totalResultL.text = [NSString stringWithFormat:@"金额：%0.2f", [lineData.amount doubleValue]];
     
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 64;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
+    CGSize size = [@"holder" sizeWithAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]}];
+    return size.height + 20;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     UIView *result = [[UIView alloc] init];
-    result.backgroundColor = [UIColor grayColor];
+    result.backgroundColor = FFWarningColor;
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, [UIScreen mainScreen].bounds.size.width, 20)];
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    titleLabel.textColor = [UIColor whiteColor];
     
     titleLabel.text =
     [NSString stringWithFormat:@"总额：%0.2f",
      [self.resultNeedDisplay.totalResult doubleValue]];
     
+    CGSize size = [titleLabel.text sizeWithAttributes:@{NSFontAttributeName:titleLabel.font}];
+    
+    CGRect frame = CGRectMake(12, 10, size.width, size.height);
+    
+    titleLabel.frame = frame;
+    
     [result addSubview:titleLabel];
+    
+    result.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, self.headerHeight);
     
     return result;
 }

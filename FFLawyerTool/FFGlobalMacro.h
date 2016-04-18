@@ -20,4 +20,5 @@
 #define UIColorFromRGBWithAlpha(rgbValue, alpha1) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:alpha1]//十六进制转RGB色
 
 #define FFMainColor FFRGBColor(74, 144, 226)
+#define FFWarningColor FFRGBColor(249, 142, 79)
 #endif /* FFGlobalMacro_h */

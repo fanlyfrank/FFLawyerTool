@@ -25,10 +25,11 @@
     self.countTextField.tag = 3;
     self.countTextField.backgroundColor = FFMainColor;
     self.countTextField.textAlignment = NSTextAlignmentCenter;
-    self.countTextField.textColor = [UIColor redColor];
+    self.countTextField.textColor = [UIColor whiteColor];
     self.countTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     self.countTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入财产件数" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     self.countTextField.keyboardType = UIKeyboardTypeNumberPad;
+    self.countTextField.tintColor = [UIColor whiteColor];
     
     [self addSubview:self.countTextField];
 }
