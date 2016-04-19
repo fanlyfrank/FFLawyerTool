@@ -259,21 +259,13 @@
             if (currentIndex == 1) {
                 FFFineInterestInputView *fineInnerView = (FFFineInterestInputView *)realInnerView;
                 if ([self.datePicker.date compare:[dateformatter dateFromString:@"1996.05.01"]] == NSOrderedAscending) {
-                    fineInnerView.minRateTextField.userInteractionEnabled = YES;
-                    fineInnerView.minRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
-                                                                            initWithString:@"输入1996.4.30前的利率"
-                                                                            attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-                    fineInnerView.minRateTextField.backgroundColor = FFMainColor;
+                    
+                    [fineInnerView switchMinRateTextFieldToActive];
                 }
                 
                 else {
                     
-                    fineInnerView.minRateTextField.userInteractionEnabled = NO;
-                    fineInnerView.minRateTextField.text = nil;
-                    fineInnerView.minRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
-                                                                            initWithString:@"暂不可用"
-                                                                            attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-                    fineInnerView.minRateTextField.backgroundColor = [UIColor grayColor];
+                    [fineInnerView switchMinRateTextFieldToDisactive];
                 }
             }
 
@@ -287,21 +279,14 @@
             if (currentIndex == 1) {
                 FFFineInterestInputView *fineInnerView = (FFFineInterestInputView *)realInnerView;
                 if ([self.datePicker.date compare:[dateformatter dateFromString:@"2014.01.01"]] == NSOrderedDescending) {
-                    fineInnerView.maxRateTextField.userInteractionEnabled = YES;
-                    fineInnerView.maxRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
-                                                                            initWithString:@"输入2014.1.1后的利率"
-                                                                            attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-                    fineInnerView.maxRateTextField.backgroundColor = FFMainColor;
+                    
+                    [fineInnerView switchMaxRateTextFieldToActive];
                 }
                 
                 else {
                    
-                    fineInnerView.maxRateTextField.userInteractionEnabled = NO;
-                    fineInnerView.maxRateTextField.text = nil;
-                    fineInnerView.maxRateTextField.attributedPlaceholder = [[NSAttributedString alloc]
-                                                                            initWithString:@"暂不可用"
-                                                                            attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-                    fineInnerView.maxRateTextField.backgroundColor = [UIColor grayColor];
+                    [fineInnerView switchMaxRateTextFieldToDisactive];
+                    
                 }
             }
         }

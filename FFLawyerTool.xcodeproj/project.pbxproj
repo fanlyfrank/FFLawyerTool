@@ -12,6 +12,8 @@
 		3577DFAB1CC0E430004E14C2 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3577DFAA1CC0E430004E14C2 /* UIImage+Utils.m */; };
 		3577DFAF1CC4BAE1004E14C2 /* FFResultDetialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3577DFAD1CC4BAE1004E14C2 /* FFResultDetialCell.m */; };
 		3577DFB01CC4BAE1004E14C2 /* FFResultDetialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3577DFAE1CC4BAE1004E14C2 /* FFResultDetialCell.xib */; };
+		3577DFB31CC4D76E004E14C2 /* FFCaculaterResultHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3577DFB21CC4D76E004E14C2 /* FFCaculaterResultHandler.m */; };
+		3577DFB61CC4E0CC004E14C2 /* FFCaculateResultHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3577DFB51CC4E0CC004E14C2 /* FFCaculateResultHistoryModel.m */; };
 		35A5930E1CB24E1B00AD0559 /* FFBaseInputModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A5930D1CB24E1B00AD0559 /* FFBaseInputModel.m */; };
 		35A593111CB24EB800AD0559 /* FFBaseOutputModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A593101CB24EB800AD0559 /* FFBaseOutputModel.m */; };
 		35A593141CB24F7800AD0559 /* FFCaculater.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A593131CB24F7800AD0559 /* FFCaculater.m */; };
@@ -66,6 +68,10 @@
 		3577DFAC1CC4BAE1004E14C2 /* FFResultDetialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFResultDetialCell.h; sourceTree = "<group>"; };
 		3577DFAD1CC4BAE1004E14C2 /* FFResultDetialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFResultDetialCell.m; sourceTree = "<group>"; };
 		3577DFAE1CC4BAE1004E14C2 /* FFResultDetialCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FFResultDetialCell.xib; sourceTree = "<group>"; };
+		3577DFB11CC4D76E004E14C2 /* FFCaculaterResultHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFCaculaterResultHandler.h; sourceTree = "<group>"; };
+		3577DFB21CC4D76E004E14C2 /* FFCaculaterResultHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFCaculaterResultHandler.m; sourceTree = "<group>"; };
+		3577DFB41CC4E0CC004E14C2 /* FFCaculateResultHistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFCaculateResultHistoryModel.h; sourceTree = "<group>"; };
+		3577DFB51CC4E0CC004E14C2 /* FFCaculateResultHistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFCaculateResultHistoryModel.m; sourceTree = "<group>"; };
 		35A5930C1CB24E1B00AD0559 /* FFBaseInputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFBaseInputModel.h; sourceTree = "<group>"; };
 		35A5930D1CB24E1B00AD0559 /* FFBaseInputModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFBaseInputModel.m; sourceTree = "<group>"; };
 		35A5930F1CB24EB800AD0559 /* FFBaseOutputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFBaseOutputModel.h; sourceTree = "<group>"; };
@@ -270,6 +276,10 @@
 				35F313C01CBCE6B60060861D /* FFFineInterestInputModel.m */,
 				3577DFA41CC0C526004E14C2 /* FFCountableInputModel.h */,
 				3577DFA51CC0C526004E14C2 /* FFCountableInputModel.m */,
+				3577DFB11CC4D76E004E14C2 /* FFCaculaterResultHandler.h */,
+				3577DFB21CC4D76E004E14C2 /* FFCaculaterResultHandler.m */,
+				3577DFB41CC4E0CC004E14C2 /* FFCaculateResultHistoryModel.h */,
+				3577DFB51CC4E0CC004E14C2 /* FFCaculateResultHistoryModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -507,6 +517,7 @@
 				35F313A71CB788E10060861D /* FFLoanInterestRateModel.m in Sources */,
 				35F313BE1CBCE61B0060861D /* FFDelayPerformanceInputModel.m in Sources */,
 				3577DFAB1CC0E430004E14C2 /* UIImage+Utils.m in Sources */,
+				3577DFB31CC4D76E004E14C2 /* FFCaculaterResultHandler.m in Sources */,
 				35BCCB451CAE3FBD00A1E9F0 /* FFMainViewController.m in Sources */,
 				35A5931E1CB4C5B700AD0559 /* FFTSTInnerViewFactory.m in Sources */,
 				35A593211CB4C5DB00AD0559 /* FFTSTInnerView.m in Sources */,
@@ -519,6 +530,7 @@
 				35BCCB3F1CAE3FBD00A1E9F0 /* main.m in Sources */,
 				3577DFA31CC0BECD004E14C2 /* FFCountableInputView.m in Sources */,
 				3577DFAF1CC4BAE1004E14C2 /* FFResultDetialCell.m in Sources */,
+				3577DFB61CC4E0CC004E14C2 /* FFCaculateResultHistoryModel.m in Sources */,
 				35A593181CB25AD800AD0559 /* MBProgressHUD+Addition.m in Sources */,
 				35F313BB1CBCDC830060861D /* FFFineInterestInputView.m in Sources */,
 				35A593141CB24F7800AD0559 /* FFCaculater.m in Sources */,

@@ -16,16 +16,13 @@
     [super commonInit];
     
     _startDateBtn = [[UIButton alloc] init];
-    //self.startDateBtn.backgroundColor = FFMainColor;
     [self.startDateBtn setBackgroundImage:[UIImage imageNamed:@"btn_bg"] forState:UIControlStateNormal];
     [self.startDateBtn setTitle:@"起始时间" forState:UIControlStateNormal];
     self.startDateBtn.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     
     _startDateTipsBtn = [[UIButton alloc] init];
     self.startDateTipsBtn.tag = 0;
-    //self.startDateTipsBtn.backgroundColor = FFMainColor;
     [self.startDateTipsBtn setBackgroundImage:[UIImage imageNamed:@"help"] forState:UIControlStateNormal];
-    //[self.startDateTipsBtn setTitle:@"帮助" forState:UIControlStateNormal];
     self.startDateTipsBtn.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
     
     _endDateBtn = [[UIButton alloc] init];
@@ -36,9 +33,7 @@
     
     _endDateTipsBtn = [[UIButton alloc] init];
     self.endDateTipsBtn.tag = 1;
-    //self.endDateTipsBtn.backgroundColor = FFMainColor;
     [self.endDateTipsBtn setBackgroundImage:[UIImage imageNamed:@"help"] forState:UIControlStateNormal];
-    //[self.endDateTipsBtn setTitle:@"帮助" forState:UIControlStateNormal];
     self.endDateTipsBtn.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
     
     [self addSubview:self.startDateBtn];

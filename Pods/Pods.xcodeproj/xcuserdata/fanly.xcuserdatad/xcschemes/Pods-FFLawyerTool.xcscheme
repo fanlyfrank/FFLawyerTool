@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'FA444EF42B4E059A1C6808B9'
+               BlueprintIdentifier = '2C2989DE12170ECB7E4AB981'
                BlueprintName = 'Pods-FFLawyerTool'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-FFLawyerTool.a'>

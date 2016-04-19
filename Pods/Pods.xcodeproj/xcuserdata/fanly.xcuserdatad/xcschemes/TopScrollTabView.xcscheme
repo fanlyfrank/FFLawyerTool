@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'E6AEB4E59554D181D3CC7726'
+               BlueprintIdentifier = '75EDDEDC56800B3D09DA6DC9'
                BlueprintName = 'TopScrollTabView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libTopScrollTabView.a'>

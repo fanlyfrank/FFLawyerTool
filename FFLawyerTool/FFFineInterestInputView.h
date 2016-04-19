@@ -14,4 +14,10 @@
 
 @property UITextField *maxRateTextField;
 
+- (void)switchMinRateTextFieldToActive;
+- (void)switchMinRateTextFieldToDisactive;
+
+- (void)switchMaxRateTextFieldToActive;
+- (void)switchMaxRateTextFieldToDisactive;
+
 @end

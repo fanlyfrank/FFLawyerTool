@@ -19,15 +19,15 @@
     self.principleTextField.attributedPlaceholder =
     [[NSAttributedString alloc]
      initWithString:@"保全财产估价"
-     attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+     attributes:@{NSForegroundColorAttributeName:FFMainColor}];
     
     _countTextField = [[UITextField alloc] init];
     self.countTextField.tag = 3;
-    self.countTextField.backgroundColor = FFMainColor;
+    self.countTextField.background = [UIImage imageNamed:@"input_active_bg"];
     self.countTextField.textAlignment = NSTextAlignmentCenter;
     self.countTextField.textColor = [UIColor whiteColor];
     self.countTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    self.countTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入财产件数" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    self.countTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入财产件数" attributes:@{NSForegroundColorAttributeName:FFMainColor}];
     self.countTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.countTextField.tintColor = [UIColor whiteColor];
     

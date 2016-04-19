@@ -54,15 +54,15 @@
     
     _principleTextField = [[UITextField alloc] init];
     self.principleTextField.tag = 0;
-    self.principleTextField.backgroundColor = FFMainColor;
+    self.principleTextField.background = [UIImage imageNamed:@"input_active_bg"];
     self.principleTextField.textAlignment = NSTextAlignmentCenter;
-    self.principleTextField.textColor = [UIColor whiteColor];
+    self.principleTextField.textColor = FFMainColor;
     self.principleTextField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     self.principleTextField.attributedPlaceholder =
     [[NSAttributedString alloc]
      initWithString:@"输入本金"
-     attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    self.principleTextField.tintColor = [UIColor whiteColor];
+     attributes:@{NSForegroundColorAttributeName: FFMainColor}];
+    self.principleTextField.tintColor = FFMainColor;
     self.principleTextField.keyboardType = UIKeyboardTypeDecimalPad;
     
     _startCalculateBtn = [[UIButton alloc] init];
