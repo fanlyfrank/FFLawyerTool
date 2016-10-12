@@ -48,7 +48,7 @@
         
         [self.dbQueue inDatabase:^(FMDatabase *db) {
             
-            BOOL success = [db executeUpdate:@"CREATE TABLE tb_result_history (result_id INTEGER, user_id TEXT, alias TEXT, status INTEGER, create_time TEXT, file_path TEXT, detail BLOB)"];
+            BOOL success = [db executeUpdate:@"CREATE TABLE tb_result_history (result_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, alias TEXT, status INTEGER, create_time TEXT, file_path TEXT, detail BLOB)"];
             
             if (!success) {
                 NSLog(@"create table tb_result_history fail");

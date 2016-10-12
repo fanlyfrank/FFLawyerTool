@@ -15,6 +15,8 @@
 #define FFDBErrorDomain @"ff db error"
 @interface FFCaculaterResultHandler : NSObject
 
++ (instancetype)sharedCaculaterResultHandler;
+
 - (void)addResult:(FFCaculateResultHistoryModel *)result
           success:(void(^)())success
           failure:(void(^)(NSError *error))failure;

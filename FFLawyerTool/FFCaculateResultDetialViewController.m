@@ -10,10 +10,14 @@
 #import "FFOutputPartModel.h"
 #import "FFResultDetialCell.h"
 #import "FFGlobalMacro.h"
+#import "FFCaculaterResultHandler.h"
+#import "FFCaculateResultHistoryModel.h"
 
 @interface FFCaculateResultDetialViewController ()
 
 @property (assign, nonatomic) CGFloat headerHeight;
+
+@property (strong, nonatomic) FFCaculaterResultHandler *resultHandler;
 
 @end
 
@@ -29,11 +33,22 @@
     
     self.clearsSelectionOnViewWillAppear = NO;
     
-    self.navigationItem.rightBarButtonItem =
-    [[UIBarButtonItem alloc] initWithTitle:@"导出结果"
-                                     style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(export)];
+    self.navigationItem.rightBarButtonItems = @[
+    
+    [[UIBarButtonItem alloc]
+     initWithTitle:@"导出"
+     style:UIBarButtonItemStylePlain
+     target:self
+     action:@selector(export)],
+    
+    [[UIBarButtonItem alloc]
+     initWithTitle:@"保存"
+     style:UIBarButtonItemStylePlain
+     target:self
+     action:@selector(save)]
+    
+    ];
+    
     [self.tableView registerClass:[FFResultDetialCell class]
            forCellReuseIdentifier:NSStringFromClass([FFResultDetialCell class])];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([FFResultDetialCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([FFResultDetialCell class])];
@@ -112,6 +127,18 @@
     [resultAlert addAction:cancle];
     
     [self presentViewController:resultAlert animated:YES completion:nil];
+}
+
+- (void)save {
+    
+    if (!self.resultHandler) {
+        _resultHandler = [FFCaculaterResultHandler sharedCaculaterResultHandler];
+    }
+    
+    FFCaculateResultHistoryModel *history = [[FFCaculateResultHistoryModel alloc] init];
+    history.user_id = @"fanly";
+    history.details = self.resultNeedDisplay;
+    
 }
 
 @end
